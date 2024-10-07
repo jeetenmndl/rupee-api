@@ -1,7 +1,7 @@
 import { Poppins } from "next/font/google";
 import "./globals.css";
 
-// import {ClerkProvider} from '@clerk/nextjs'
+import {ClerkProvider} from '@clerk/nextjs'
 import { Toaster } from "@/components/ui/toaster";
 
 
@@ -19,7 +19,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    // <ClerkProvider>
+    <ClerkProvider>
       <html lang="en">
         <body className={poppins.className}>
           
@@ -29,6 +29,6 @@ export default function RootLayout({ children }) {
 
         </body>
       </html>
-    // </ClerkProvider>
+    </ClerkProvider>
   )
 }

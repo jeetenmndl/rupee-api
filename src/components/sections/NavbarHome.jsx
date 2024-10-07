@@ -25,7 +25,7 @@ import { LogIn } from "lucide-react"
                 <Link href="/">Pricing</Link>
                 <Link href="/">Feedback</Link>
 
-                <Link href="/">
+                <Link href="/projects">
                     <Button variant="outline" className="bg-main text-white hover:bg-main hover:text-white hover:underline group duration-1000">Log in <LogIn size={18} className="ml-2 hidden group-hover:block duration-1000" /></Button>
                 </Link>
             </div>
