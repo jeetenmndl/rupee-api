@@ -9,17 +9,17 @@ const DashboardNavLinks = () => {
 
     const pathname = usePathname();
     const url = pathname.split("/");
-    const projectName = url[2];
+    const projectID = url[2];
     // console.log(pathname, url[2]);
     
 
     const navLinks= [
-        {name: "Dashboard", href: `/dashboard/${projectName}`},
-        {name: "Transactions", href: `/dashboard/${projectName}/transactions`},
-        {name: "Insights", href: `/dashboard/${projectName}/insights`},
-        {name: "KYC", href: `/dashboard/${projectName}/kyc`},
-        {name: "Settings", href: `/dashboard/${projectName}/settings`},
-        {name: "Settlement", href: `/dashboard/${projectName}/settlement`},
+        {name: "Dashboard", href: `/dashboard/${projectID}`},
+        {name: "Transactions", href: `/dashboard/${projectID}/transactions`},
+        {name: "Insights", href: `/dashboard/${projectID}/insights`},
+        {name: "History", href: `/dashboard/${projectID}/history`},
+        {name: "Settlement", href: `/dashboard/${projectID}/settlement`},
+        {name: "Settings", href: `/dashboard/${projectID}/settings`},
     ]
     
 

@@ -9,7 +9,7 @@ const navLinks= [
     {name: "Create Project", href: "/projects/create-project"},
     {name: "Insights", href: "/projects/insights"},
     {name: "Transactions", href: "/projects/transactions"},
-    {name: "Manage Project", href: "/projects/manage"},
+    {name: "KYC", href: "/kyc"},
 ]
 
 const ProjectNavLinks = () => {
