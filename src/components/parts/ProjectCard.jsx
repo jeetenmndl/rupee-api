@@ -8,7 +8,7 @@ const ProjectCard = (props) => {
 
   return (
     
-    <Link href={"/dashboard/"+project.name}>
+    <Link href={"/dashboard/"+project._id}>
     
     <Card className="cursor-pointer border-gray-300 hover:border-main">
         <CardHeader className="flex flex-row items-center justify-between">
