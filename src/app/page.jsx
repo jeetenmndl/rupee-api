@@ -16,8 +16,8 @@ export default function Home() {
 {/* heading section  */}
      <section className="px-60 flex flex-col justify-center">
 
-      <div className=" absolute top-50 left-20 w-52 h-52 bg-pink-100 blur-3xl"></div>
-      <div className=" absolute bottom-20 right-36 w-80 h-80 bg-blue-100 blur-3xl"></div>
+      <div className=" absolute top-50 left-20 w-52 h-52 bg-pink-50 blur-3xl"></div>
+      <div className=" absolute bottom-20 right-36 w-80 h-80 bg-blue-50 blur-3xl"></div>
 
       <div className="flex items-center justify-center gap-4 mb-32 mt-4 ">
         <div className="font-semibold text-xl">
