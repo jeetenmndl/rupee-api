@@ -4,6 +4,9 @@ import Dots from "@/../public/dots.svg"
 import Image from "next/image";
 import AnimatedSphere from "@/components/sections/AnimatedSphere";
 import HomeToast from "@/components/parts/HomeToast";
+import ParticlesHome from "@/components/parts/Particles";
+import Particles from "@/components/ui/particles";
+import RetroGrid from "@/components/ui/retro-grid";
 
 
 
@@ -14,8 +17,8 @@ export default function Home() {
      <NavbarHome />
 
 {/* heading section  */}
-     <section className="px-60 flex flex-col justify-center">
-
+     <section className="px-60 flex flex-col justify-center relative">
+     
       <div className=" absolute top-50 left-20 w-52 h-52 bg-pink-50 blur-3xl"></div>
       <div className=" absolute bottom-20 right-36 w-80 h-80 bg-blue-50 blur-3xl"></div>
 

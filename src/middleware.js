@@ -7,7 +7,10 @@ const isPublicRoute = createRouteMatcher([
     "/",
     "/about",
     "/docs",
-    "/feedback"
+    "/feedback",
+    "/esewa-form(.*)",
+    "/ecommerce(.*)",
+
   
 ])
 const isPublicApiRoute = createRouteMatcher([
