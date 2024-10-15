@@ -8,13 +8,12 @@ const isPublicRoute = createRouteMatcher([
     "/about",
     "/docs",
     "/feedback",
-    "/esewa-form(.*)",
+    "/esewa-redirect(.*)",
     "/ecommerce(.*)",
-
-  
 ])
 const isPublicApiRoute = createRouteMatcher([
-    "/api(.*)"
+    "/api(.*)",
+    "/api/khalti(.*)"
 ])
 
 
@@ -25,9 +24,9 @@ export default clerkMiddleware((auth, req) => {
      const isApiRequest = currentUrl.pathname.startsWith("/api")
 
      // If user is logged in and accessing a public route but not the dashboard
-    if(userId && isPublicRoute(req) && !isAccessingProjects) {
-        return NextResponse.redirect(new URL("/projects", req.url))
-    }
+    // if(userId && isPublicRoute(req) && !isAccessingProjects) {
+    //     return NextResponse.redirect(new URL("/projects", req.url))
+    // }
     //not logged in
     if(!userId){
         // If user is not logged in and trying to access a protected route

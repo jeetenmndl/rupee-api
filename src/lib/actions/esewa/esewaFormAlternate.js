@@ -1,4 +1,4 @@
-// "use client"
+
 
 import getDomain from "@/lib/getEnv/getDomain";
 import getEsewaPath from "@/lib/getEnv/getEsewaPath";
@@ -6,7 +6,7 @@ import generateHash from "@/lib/hashing";
 
 
 
-const esewaFormSubmit = async ()=>{
+const esewaFormAlternate = async ()=>{
 
     const path = await getEsewaPath();
     const domain = await getDomain();
@@ -15,6 +15,7 @@ const esewaFormSubmit = async ()=>{
     // var path = "https://rc-epay.esewa.com.np/api/epay/main/v2/form";
 
     let uuid = Date.now().toString();
+    console.log(uuid, "is the uuid")
 
     let signatureHash = await generateHash(`total_amount=100,transaction_uuid=${uuid},product_code=EPAYTEST`)
 
@@ -35,26 +36,43 @@ const esewaFormSubmit = async ()=>{
             transaction_uuid: uuid
         }
 
-
-        var form = document.createElement("form");
-        form.setAttribute("method", "POST");
-        form.setAttribute("action", path);
+        const form = new FormData();
 
         for (var key in params) {
-            var hiddenField = document.createElement("input");
-            hiddenField.setAttribute("type", "hidden");
-            hiddenField.setAttribute("name", key);
-            hiddenField.setAttribute("value", params[key]);
-            form.appendChild(hiddenField);
+            form.append( key , params[key]);
         }
+    
 
+        console.log(form);
 
-        document.body.appendChild(form);
+        // var form = document.createElement("form");
+        // form.setAttribute("method", "POST");
+        // form.setAttribute("action", path);
+
+        // for (var key in params) {
+        //     var hiddenField = document.createElement("input");
+        //     hiddenField.setAttribute("type", "hidden");
+        //     hiddenField.setAttribute("name", key);
+        //     hiddenField.setAttribute("value", params[key]);
+        //     form.appendChild(hiddenField);
+        // }
+
+        // document.body.appendChild(form);
         
-            form.submit();
+        //     form.submit();
+
+
+        const response = await fetch(path, {
+            method: 'POST',
+            body: form,
+            headers: {
+              "Content-Type": "application/json",  
+            },
+          });
+    
 
 
   }
 
 
-  export default esewaFormSubmit;
+  export default esewaFormAlternate;

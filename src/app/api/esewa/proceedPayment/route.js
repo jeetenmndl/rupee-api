@@ -4,6 +4,7 @@ import connect from "@/lib/dbConn";
 import { NextResponse} from "next/server";
 import { v4 as uuidv4 } from 'uuid';
 import { headers } from "next/headers";
+import esewaFormSubmit from "@/lib/actions/esewa/esewaFormSubmit";
 
 
 export async function POST(req, res) {
@@ -27,7 +28,11 @@ export async function POST(req, res) {
             console.log("reached project");
 
             if (!project) {
-                return NextResponse.redirect(failureUrl+"?success=false&message=API-KEY-MISMATCH", { status: 307 });
+                return NextResponse.json(
+                    { success:false,
+                        message: "KEY MISMATCH" },
+                    { status: 401 }
+                )
             }
 
             // Insert transaction data into the Transaction collection
@@ -47,12 +52,20 @@ export async function POST(req, res) {
                   projectID: projectID
             });
 
-            // Redirect to the client page with the transaction _id
-            const redirectUrl = `${process.env.DOMAIN}/esewa-form/${transaction._id}`;
+            console.log(transaction._id)
+            esewaFormSubmit();
 
-            return NextResponse.redirect(redirectUrl);
+            return NextResponse.json(
+                { success:true,
+                    redirectUrl: `${process.env.domain}/esewa-redirect/${transaction._id}` },
+                { status: 200 }
+            )
 
         } catch (error) {
-            return NextResponse.redirect(failureUrl+"?success=false&message=INTERNAL-SERVER-ERROR", { status: 307 });
+            return NextResponse.json(
+                { success:false,
+                    message:"INTERNAL SERVER ERROR" },
+                { status: 500 }
+            )
         }
 }

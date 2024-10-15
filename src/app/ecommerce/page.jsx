@@ -15,12 +15,16 @@ import {
 import Image from 'next/image'
 import TshirtImage from "@/../public/tshirtImage.jpg"
 import getDomain from '@/lib/getEnv/getDomain'
+import { useRouter } from 'next/navigation'
+import { useToast } from '@/hooks/use-toast'
 
 
 
 export default function ProductPage() {
   const [size, setSize] = useState('m')
   const [color, setColor] = useState('blue')
+  const {toast} = useToast();
+  const router = useRouter();
   
   
   
@@ -36,7 +40,7 @@ export default function ProductPage() {
       }
 
 
-    const response = await fetch(`${domain}/api/esewa/proceedPayment`, {
+    const result = await fetch(`${domain}/api/esewa/proceedPayment`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -44,8 +48,53 @@ export default function ProductPage() {
         },
         body: JSON.stringify(bodyObject)
     });
+
+    const response = await result.json();
+
+    console.log(response)
+    if(response.success==true){
+      router.push(response.redirectUrl);
+    }else{
+      toast({
+        title: "Oops!!",
+        description: response.message,
+      })
+    }
         
   }
+
+const khaltiClick = async ()=>{
+  const domain = await getDomain();
+  const bodyObject= {
+    amount: "100",
+    successUrl: `${domain}/ecommerce/paymentSuccess`,
+    failureUrl: `${domain}/ecommerce/paymentFailed`,
+    orderID: "12345",
+    projectID: "6704ca3c2779263484fcec5f"
+  }
+
+  const result2 = await fetch(`${domain}/api/khalti/proceedPayment`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'api-key':'8eaab62b-ee15-4f7c-8dbf-5a3e719c1545',
+    },
+    body: JSON.stringify(bodyObject)
+  });
+
+  const response2 = await result2.json();
+  if(response2.success){
+    router.push(response2.redirectUrl);
+  }
+  else{
+    toast({
+      variant: "destructive",
+      title: "Oops!.",
+      description: response2.message,
+    })
+  }
+}
+
 
   return (
     <div className="max-w-7xl mx-auto p-6 mt-20">
@@ -129,7 +178,7 @@ export default function ProductPage() {
                   <Button className="bg-green-500 hover:bg-green-600" onClick={onEsewaClick}>
                     eSewa
                   </Button>
-                  <Button className="bg-purple-800 hover:bg-purple-900">
+                  <Button className="bg-purple-800 hover:bg-purple-900" onClick={khaltiClick}>
                     Khalti
                   </Button>
                   <Button className="bg-red-600 hover:bg-red-700">
