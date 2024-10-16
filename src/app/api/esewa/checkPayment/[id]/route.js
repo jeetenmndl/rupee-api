@@ -1,6 +1,6 @@
 import connect from "@/lib/dbConn";
 import generateHash from "@/lib/hashing";
-import Transaction from "@/models/Transaction";
+import Transaction from "@/models/transactionModel";
 import { NextResponse } from "next/server";
 
 export async function GET(req,{params}) {
