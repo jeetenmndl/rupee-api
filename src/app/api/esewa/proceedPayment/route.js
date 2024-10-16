@@ -57,7 +57,7 @@ export async function POST(req, res) {
 
             return NextResponse.json(
                 { success:true,
-                    redirectUrl: `${process.env.domain}/esewa-redirect/${transaction._id}` },
+                    redirectUrl: `${process.env.DOMAIN}/esewa-redirect/${transaction._id}` },
                 { status: 200 }
             )
 
