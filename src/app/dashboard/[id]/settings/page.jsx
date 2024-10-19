@@ -6,10 +6,18 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import KeysCopy from '@/components/parts/KeysCopy'
 
-export default function EnhancedSettingsPage() {
+export default async function Settings({params}) {
 
-  const apiKey = 'your-api-key-12345'
-  const projectKey = "secret_abcdefghijklmnop"
+  const result = await fetch(`${process.env.DOMAIN}/api/dashboard/${params.id}/keys`, {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json',
+    }
+});
+
+const response = await result.json();
+
+
 
 
   return (
@@ -22,7 +30,7 @@ export default function EnhancedSettingsPage() {
           <p className="mb-4">
             Use this API key to authenticate your requests to our service. Keep this key secret and never share it publicly.
           </p>
-          <KeysCopy data={apiKey} />
+          <KeysCopy data={response.data.apiKey} />
           <p className="text-sm text-muted-foreground mt-2">
             Include this key in the &apos;api-key&apos; header of your API requests.
           </p>
@@ -33,7 +41,7 @@ export default function EnhancedSettingsPage() {
           <p className="mb-4">
             These project keys are used to identify and authenticate your specific project. Use them while making project-specific API calls.
           </p>
-          <KeysCopy data={projectKey} />
+          <KeysCopy data={response.data._id} />
           <p className="text-sm text-muted-foreground mt-2">
             Keep these keys confidential. They are used to authenticate your project-level access.
           </p>
