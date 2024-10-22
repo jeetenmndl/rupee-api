@@ -4,6 +4,7 @@ import {Activity,ArrowUpRight,CircleUser,CreditCard,DollarSign,Menu,Package2,Ref
 import EsewaIcon from "@/../public/icons/esewa-icon.png"
 import KhaltiIcon from "@/../public/icons/khalti-icon.png"
 import ImePayIcon from "@/../public/icons/imepay-icon.png"
+import Logo from "@/../public/logoCircle.png"
 
 
 import {
@@ -31,9 +32,36 @@ export default async function Dashboard({params}) {
 
 const response = await result.json();
 
-  console.log(response)
+const transactions = response.data[0].recentTransactions;
 
-  const transactions = response.data[0].recentTransactions;
+const vendors = response.data[0].vendorTotals;
+
+let totalRevenue=0;
+vendors.forEach(item => {
+  totalRevenue= totalRevenue+item.totalVendorAmount;
+  
+});
+
+const statusColor = (status)=>{
+  switch (status.toUpperCase()) {
+    case "COMPLETE":
+      return "bg-green-100"
+      break;
+  
+    case "COMPLETED":
+      return "bg-green-100"
+      break;
+
+    case "CANCELLED":
+      return "bg-red-100"
+      break;
+    
+    default:
+      return "bg-gray-100"
+      break;
+  }
+}
+
 
   return (
     <div className="flex min-h-screen w-full flex-col">
@@ -49,10 +77,11 @@ const response = await result.json();
               <CardTitle className="text-sm font-medium">
                 Total Revenue
               </CardTitle>
-              <DollarSign className="h-4 w-4 text-muted-foreground group-hover:text-main" />
+              <Image src={Logo} alt="rupee api" className="h-6 w-6" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-semibold group-hover:text-main">$45,231.89</div>
+              <div className="text-2xl font-semibold group-hover:text-main">र {totalRevenue}
+                </div>
               <p className="text-xs text-muted-foreground">
                 +20.1% from last month
               </p>
@@ -63,12 +92,12 @@ const response = await result.json();
           <Card x-chunk="dashboard-01-chunk-1"  className="group">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
-                Subscriptions
+                Esewa
               </CardTitle>
-              <Users className="h-4 w-4 text-muted-foreground group-hover:text-main" />
+              <Image src={EsewaIcon} alt="rupee api esewa" className="h-5 w-5" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-semibold group-hover:text-main">+2350</div>
+              <div className="text-2xl font-semibold group-hover:text-main">रु  {vendors[0]?vendors[0]?.totalVendorAmount:"0"}</div>
               <p className="text-xs text-muted-foreground">
                 +180.1% from last month
               </p>
@@ -78,11 +107,11 @@ const response = await result.json();
 
           <Card x-chunk="dashboard-01-chunk-2" className="group">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium ">Sales</CardTitle>
-              <CreditCard className="h-4 w-4 text-muted-foreground group-hover:text-main" />
+              <CardTitle className="text-sm font-medium ">Khalti</CardTitle>
+              <Image src={KhaltiIcon} alt="rupee api khalti" className="h-5 w-5" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-semibold group-hover:text-main">+12,234</div>
+              <div className="text-2xl font-semibold group-hover:text-main">रु {vendors[1]?vendors[1]?.totalVendorAmount:"0"}</div>
               <p className="text-xs text-muted-foreground">
                 +19% from last month
               </p>
@@ -91,11 +120,11 @@ const response = await result.json();
 
           <Card x-chunk="dashboard-01-chunk-3" className="group">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Active Now</CardTitle>
-              <Activity className="h-4 w-4 text-muted-foreground group-hover:text-main" />
+              <CardTitle className="text-sm font-medium">My Pay</CardTitle>
+              <Image src={ImePayIcon} alt="rupee api ime pay" className="h-5 w-5" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-semibold group-hover:text-main">+573</div>
+              <div className="text-2xl font-semibold group-hover:text-main">रु {vendors[2]?vendors[2]?.totalVendorAmount:"0"}</div>
               <p className="text-xs text-muted-foreground">
                 +201 since last hour
               </p>
@@ -162,7 +191,7 @@ const response = await result.json();
                       <TableCell>
                         <div className="font-medium">{item.mobile}</div>
                         <div className="hidden text-sm text-muted-foreground md:inline">
-                        {item.date.substr(0,10)+ " " + item.date.substr(11,5)}
+                        {item.date.substr(0,10)+ " (" + item.date.substr(11,5)+")"}
                         </div>
                       </TableCell>
                       <TableCell className="hidden sm:table-cell">
@@ -177,8 +206,8 @@ const response = await result.json();
                         }
                       </TableCell>
                       <TableCell className="hidden sm:table-cell">
-                        <Badge className="text-xs" variant="secondary">
-                          {item.status}
+                        <Badge className={`text-xs ${statusColor(item.status)}`} variant="secondary">
+                          {item.status.toUpperCase()}
                         </Badge>
                       </TableCell>
                       <TableCell className="hidden md:table-cell">
