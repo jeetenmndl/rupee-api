@@ -20,14 +20,20 @@ import {Table,TableBody,TableCell,TableHead,TableHeader,TableRow,
 import Image from "next/image"
 import getTransactions from "@/lib/actions/getTransactions"
 
-export default async function Dashboard() {
+export default async function Dashboard({params}) {
 
-  // const transactions = await getTransactions("test1");
-  // console.log(transactions.data.length)
+  const result = await fetch(`${process.env.DOMAIN}/api/dashboard/${params.id}`, {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+}, {cache: "no-store"});
 
-  const transactions = {
-    data: []
-  }
+const response = await result.json();
+
+  console.log(response)
+
+  const transactions = response.data[0].recentTransactions;
 
   return (
     <div className="flex min-h-screen w-full flex-col">
@@ -147,7 +153,10 @@ export default async function Dashboard() {
               <TableBody>
 
                 {
-                  transactions.data.map((item)=>{
+                  transactions.length==0?
+                  <p className="text-center text-2xl text-gray-600 font-bold mt-16">No transactions</p>
+                  :
+                  transactions.map((item)=>{
                     return(
                       <TableRow key={item._id} className="hover:bg-accent">
                       <TableCell>
@@ -173,10 +182,10 @@ export default async function Dashboard() {
                         </Badge>
                       </TableCell>
                       <TableCell className="hidden md:table-cell">
-                        {item.transaction_id}
+                        {item.transactionCode}
                       </TableCell>
-                      <TableCell className="text-right">
-                        {item.total_amount}
+                      <TableCell className="text-right font-semibold">
+                        {item.totalAmount}
                       </TableCell>
                     </TableRow>
                     )

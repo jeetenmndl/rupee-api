@@ -20,45 +20,46 @@ export async function GET(req, {params}) {
             // 2. Lookup for recent 20 transactions related to the project
             {
               $lookup: {
-                from: 'transactions', // The name of the transactions collection
-                let: { projectObjectId: '$_id' }, // Reference to the Project's ObjectId
+                from: 'transactions',
+                let: { projectObjectId: '$_id' },  // Reference to the Project's ObjectId
                 pipeline: [
                   {
                     $match: {
-                      $expr: { $eq: [{ $toObjectId: '$projectID' }, '$$projectObjectId'] } // Match transactions by projectID
+                      $expr: { $eq: [{ $toObjectId: '$projectID' }, '$$projectObjectId'] }
                     }
                   },
-                  { $sort: { date: -1 } },  // Sort transactions by date in descending order (most recent first)
+                  { $sort: { date: -1 } },  // Sort by date (most recent first)
                   { $limit: 20 }  // Limit to the most recent 20 transactions
                 ],
-                as: 'recentTransactions'  // Store the results as 'recentTransactions'
+                as: 'recentTransactions'
               }
             },
       
-            // 3. Lookup transactions for vendors where the status is COMPLETE or COMPLETED
+            // 3. Lookup for transactions with status COMPLETE or COMPLETED, group by vendor
             {
               $lookup: {
                 from: 'transactions',
-                let: { projectObjectId: '$_id' }, // Project's ObjectId
+                let: { projectObjectId: '$_id' },
                 pipeline: [
                   {
                     $match: {
-                      $expr: { $eq: [{ $toObjectId: '$projectID' }, '$$projectObjectId'] }, // Match projectID
-                      status: { $in: ['COMPLETE', 'COMPLETED'] } // Only completed transactions
+                      $expr: { $eq: [{ $toObjectId: '$projectID' }, '$$projectObjectId'] },
+                      status: { $regex: /^complete(d)?$/i }  // Case-insensitive match for COMPLETE or COMPLETED
                     }
                   },
+                  // Group by vendor and calculate total amount per vendor
                   {
                     $group: {
-                      _id: '$vendor', // Group by vendor
-                      totalVendorCompletedAmount: { $sum: { $toDouble: '$totalAmount' } } // Sum transaction amounts per vendor
+                      _id: '$vendor',
+                      totalVendorAmount: { $sum: { $toDouble: '$totalAmount' } }
                     }
                   }
                 ],
-                as: 'vendorTotals'  // Store the results as 'vendorTotals'
+                as: 'vendorTotals'
               }
             },
       
-            // 4. Project the final result to include project details, recent transactions, and vendor totals
+            // 4. Project the result to include relevant project details, recent transactions, and vendor totals
             {
               $project: {
                 _id: 1,  // Include project _id
@@ -66,7 +67,7 @@ export async function GET(req, {params}) {
                 description: 1,  // Include project description
                 websiteUrl: 1,  // Include project websiteUrl
                 recentTransactions: 1,  // Include recent 20 transactions
-                vendorTotals: 1  // Include total completed transaction amount for each vendor
+                vendorTotals: 1  // Include total amount per vendor with COMPLETE/COMPLETED status
               }
             }
           ]);

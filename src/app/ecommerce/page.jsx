@@ -36,7 +36,7 @@ export default function ProductPage() {
         successUrl: `${domain}/ecommerce/paymentSuccess`,
         failureUrl: `${domain}/ecommerce/paymentFailed`,
         orderID: "12345",
-        projectID: "6704ca3c2779263484fcec5f"
+        projectID: "670509d289f58cc69c8f5441"
       }
 
 
@@ -44,7 +44,7 @@ export default function ProductPage() {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'api-key':'8eaab62b-ee15-4f7c-8dbf-5a3e719c1545',
+            'api-key':'1141f7db-913a-48e3-97b5-fa369d18de2a',
         },
         body: JSON.stringify(bodyObject)
     });
@@ -70,14 +70,14 @@ const khaltiClick = async ()=>{
     successUrl: `${domain}/ecommerce/paymentSuccess`,
     failureUrl: `${domain}/ecommerce/paymentFailed`,
     orderID: "12345",
-    projectID: "6704ca3c2779263484fcec5f"
+    projectID: "670509d289f58cc69c8f5441"
   }
 
   const result2 = await fetch(`${domain}/api/khalti/proceedPayment`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'api-key':'8eaab62b-ee15-4f7c-8dbf-5a3e719c1545',
+      'api-key':'1141f7db-913a-48e3-97b5-fa369d18de2a',
     },
     body: JSON.stringify(bodyObject)
   });
