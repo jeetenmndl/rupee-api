@@ -1,20 +1,31 @@
 "use client"
 
 import esewaFormSubmit from '@/lib/actions/esewa/esewaFormSubmit'
-import {useEffect} from 'react'
+import Image from 'next/image'
+import Logo from "@/../public/logoCircle.png"
+import {useEffect, useState} from 'react'
 
-const EsewaForm = (props) => {
+const EsewaForm = ({data}) => {
+
+
+  console.log(data,"props.data")
+
+  // esewaFormSubmit(data);
+
 
   useEffect(() => {
-  esewaFormSubmit(props.data)
-  document.getElementById("red").style="background:red";
-  
+      // esewaFormSubmit(data);
+      document.querySelector("form").submit();
+
+
 }, [])
 
 
     
   return (
-    <div id='red'>EsewaForm</div>
+    <div className='w-full h-dvh grid place-items-center'>
+      <Image src={Logo} alt="Rupee API logo" className='w-24 h-24 lg:w-36 lg:h-36' />
+    </div>
   )
 }
 

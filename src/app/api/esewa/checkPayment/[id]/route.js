@@ -50,7 +50,7 @@ export async function GET(req,{params}) {
 
       // If transaction is not found, SMS to admin for check
       if (!updatedTransaction) {
-       console.log("SMS to admin");
+       console.log("SMS to admin, transaction not found");
       }
 
       // Check status and redirect

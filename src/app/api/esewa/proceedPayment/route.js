@@ -53,11 +53,10 @@ export async function POST(req, res) {
             });
 
             console.log(transaction._id)
-            esewaFormSubmit();
 
             return NextResponse.json(
                 { success:true,
-                    redirectUrl: `${process.env.DOMAIN}/esewa-redirect/${transaction._id}` },
+                    redirectUrl: `${process.env.DOMAIN}/esewa-redirect/${transaction._id}?amount=${amount}&uuid=${uuid}` },
                 { status: 200 }
             )
 

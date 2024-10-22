@@ -58,6 +58,7 @@ export default function ProductPage() {
       toast({
         title: "Oops!!",
         description: response.message,
+        variant: "destructive"
       })
     }
         

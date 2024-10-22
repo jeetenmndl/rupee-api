@@ -1,4 +1,4 @@
-// "use client"
+"use client"
 
 import getDomain from "@/lib/getEnv/getDomain";
 import getEsewaPath from "@/lib/getEnv/getEsewaPath";
@@ -6,39 +6,36 @@ import generateHash from "@/lib/hashing";
 
 
 
-const esewaFormSubmit = async ()=>{
+const esewaFormSubmit = async (data,setSubmitted)=>{
 
-    const path = await getEsewaPath();
+    const esewaData = await getEsewaPath();
     const domain = await getDomain();
 
 
-    // var path = "https://rc-epay.esewa.com.np/api/epay/main/v2/form";
 
-    let uuid = Date.now().toString();
-
-    let signatureHash = await generateHash(`total_amount=100,transaction_uuid=${uuid},product_code=EPAYTEST`)
+    let signatureHash = await generateHash(`total_amount=${data.amount},transaction_uuid=${data.uuid},product_code=${esewaData.productCode}`)
 
     console.log(signatureHash)
 
 
         var params = {
-            amount: "100",
-            failure_url: "https://google.com",
+            amount: data.amount,
+            failure_url: `${domain}/api/esewa/checkPayment/${data.transactionID}`,
             product_delivery_charge: "0",
             product_service_charge: "0",
-            product_code: "EPAYTEST",
+            product_code: esewaData.productCode,
             signature: signatureHash,
             signed_field_names: "total_amount,transaction_uuid,product_code",
-            success_url: `${domain}/api/esewa/handleEsewaSuccess`,
+            success_url: `${domain}/api/esewa/checkPayment/${data.transactionID}`,
             tax_amount: "0",
-            total_amount: "100",
-            transaction_uuid: uuid
+            total_amount: data.amount,
+            transaction_uuid: data.uuid
         }
 
 
         var form = document.createElement("form");
         form.setAttribute("method", "POST");
-        form.setAttribute("action", path);
+        form.setAttribute("action", esewaData.path);
 
         for (var key in params) {
             var hiddenField = document.createElement("input");
@@ -50,6 +47,7 @@ const esewaFormSubmit = async ()=>{
 
 
         document.body.appendChild(form);
+
         
             form.submit();
 
