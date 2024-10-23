@@ -1,5 +1,5 @@
 import Link from "next/link"
-import {Activity,ArrowUpRight,CircleUser,CreditCard,DollarSign,Menu,Package2,RefreshCcw,Search,Users,
+import {Activity,ArrowUpRight,Building,CircleUser,CreditCard,DollarSign,FileText,Menu,Package2,RefreshCcw,Search,Users, Wallet,
 } from "lucide-react"
 import EsewaIcon from "@/../public/icons/esewa-icon.png"
 import KhaltiIcon from "@/../public/icons/khalti-icon.png"
@@ -14,12 +14,13 @@ import {
 } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import {Card,CardContent,CardDescription,CardHeader,CardTitle,
+import {Card,CardContent,CardDescription,CardFooter,CardHeader,CardTitle,
 } from "@/components/ui/card"
 import {Table,TableBody,TableCell,TableHead,TableHeader,TableRow,
 } from "@/components/ui/table"
 import Image from "next/image"
 import getTransactions from "@/lib/actions/getTransactions"
+import { Separator } from "@/components/ui/separator"
 
 export default async function Dashboard({params}) {
 
@@ -231,73 +232,53 @@ const statusColor = (status)=>{
 
 
           <div className="relative">
-          <Card x-chunk="dashboard-01-chunk-5" className="sticky top-4">
-            <CardHeader>
-              <CardTitle>Recent Sales</CardTitle>
-            </CardHeader>
-            <CardContent className="grid gap-8">
-              <div className="flex items-center gap-4">
-               
-                <div className="grid gap-1">
-                  <p className="text-sm font-medium leading-none">
-                    Olivia Martin
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    olivia.martin@email.com
-                  </p>
-                </div>
-                <div className="ml-auto font-medium">+$1,999.00</div>
-              </div>
-              <div className="flex items-center gap-4">
-                
-                <div className="grid gap-1">
-                  <p className="text-sm font-medium leading-none">
-                    Jackson Lee
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    jackson.lee@email.com
-                  </p>
-                </div>
-                <div className="ml-auto font-medium">+$39.00</div>
-              </div>
-              <div className="flex items-center gap-4">
-                
-                <div className="grid gap-1">
-                  <p className="text-sm font-medium leading-none">
-                    Isabella Nguyen
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    isabella.nguyen@email.com
-                  </p>
-                </div>
-                <div className="ml-auto font-medium">+$299.00</div>
-              </div>
-              <div className="flex items-center gap-4">
-                
-                <div className="grid gap-1">
-                  <p className="text-sm font-medium leading-none">
-                    William Kim
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    will@email.com
-                  </p>
-                </div>
-                <div className="ml-auto font-medium">+$99.00</div>
-              </div>
-              <div className="flex items-center gap-4">
-                
-                <div className="grid gap-1">
-                  <p className="text-sm font-medium leading-none">
-                    Sofia Davis
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    sofia.davis@email.com
-                  </p>
-                </div>
-                <div className="ml-auto font-medium">+$39.00</div>
-              </div>
-            </CardContent>
-          </Card>
+          <Card className="w-full max-w-2xl mx-auto sticky top-4">
+        <CardHeader>
+          <CardTitle className="text-2xl">Settlement Details</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center">
+              <DollarSign className="h-5 w-5 mr-2 text-muted-foreground" />
+              <span>Total Revenue</span>
+            </div>
+            <span className="font-bold">${totalRevenue.toLocaleString()}</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <div className="flex items-center">
+              <Building className="h-5 w-5 mr-2 text-muted-foreground" />
+              <span>Vendor Charges</span>
+            </div>
+            <span className="font-bold">${(3/100)*totalRevenue}</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <div className="flex items-center">
+              <CreditCard className="h-5 w-5 mr-2 text-muted-foreground" />
+              <span>Platform Charges</span>
+            </div>
+            <span className="font-bold">${(1/100)*totalRevenue}</span>
+          </div>
+          <Separator />
+          <div className="flex justify-between items-center">
+            <div className="flex items-center">
+              <Wallet className="h-5 w-5 mr-2 text-muted-foreground" />
+              <span>Total Receivable</span>
+            </div>
+            <span className="font-bold text-lg">${(96/100)*totalRevenue}</span>
+          </div>
+          <Separator />
+          {/* <div className="flex justify-between items-center">
+            <div className="flex items-center">
+              <FileText className="h-5 w-5 mr-2 text-muted-foreground" />
+              <span>Number of Transactions</span>
+            </div>
+            <span className="font-bold">{}</span>
+          </div> */}
+        </CardContent>
+        <CardFooter>
+          <Link href={"/dashboard/"+params.id+"/settlement"} className="w-full"><Button className="w-full bg-main hover:bg-purple-500">Withdraw</Button></Link>
+        </CardFooter>
+      </Card>
             </div>
 
         </div>
