@@ -1,333 +1,411 @@
-'use client'
 
-import { useState } from 'react'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+"use client"
+
+import { useState, useEffect } from "react"
+import Link from "next/link"
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { CopyIcon, CheckIcon } from 'lucide-react'
-import Logo from "@/../public/logoCircle.png"
-import Image from 'next/image'
 
-export default function ApiDocs() {
-  const [copiedTab, setCopiedTab] = useState(null)
-
-  const copyToClipboard = (text, tab) => {
+export default function Component() {
+  const [activeSection, setActiveSection] = useState(null)
+  const [isCopied, setIsCopied] = useState(false)
+  const handleScroll = () => {
+    const sections = document.querySelectorAll("section")
+    let currentActiveSection = null
+    sections.forEach((section) => {
+      const sectionTop = section.offsetTop
+      const sectionHeight = section.offsetHeight
+      if (window.pageYOffset >= sectionTop && window.pageYOffset < sectionTop + sectionHeight) {
+        currentActiveSection = section.id
+      }
+    })
+    setActiveSection(currentActiveSection)
+  }
+  const handleCopy = (text, sectionId) => {
     navigator.clipboard.writeText(text)
-    setCopiedTab(tab)
-    setTimeout(() => setCopiedTab(null), 2000)
+    setIsCopied(sectionId)
+    setTimeout(() => setIsCopied(null), 2000)
   }
-
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll)
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+    }
+  }, [])
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <header className="bg-primary text-primary-foreground py-6">
-        <div className="container mx-auto px-4">
-          <h1 className="text-3xl font-bold">Platform API Documentation</h1>
-        </div>
-      </header>
-
-      <main className="container mx-auto px-4 py-8">
-        <section className="mb-12">
-          <h2 className="text-2xl font-semibold mb-4">API Overview</h2>
-          <p className="mb-4">
-            Welcome to the Platform API documentation. Our API allows you to integrate our powerful features directly into your applications, enabling you to manage resources, retrieve data, and perform actions programmatically.
-          </p>
-          <p className="mb-4">
-            Our RESTful API uses standard HTTP methods and returns responses in JSON format. Authentication is required for all API endpoints and is done using API keys.
-          </p>
-          <h3 className="text-xl font-semibold mb-2">API Workflow</h3>
-          <div className="bg-muted p-4 rounded-md">
-            <Image src={Logo} alt="API Workflow Diagram" className="mx-auto" />
+    <div className="flex min-h-screen w-full">
+      <aside className="sticky top-0 hidden h-screen w-64 shrink-0 border-r bg-background px-6 py-8 md:block">
+        <nav className="space-y-6">
+          <div className="space-y-1">
+            <h4 className="text-sm font-medium">Getting Started</h4>
+            <ul className="space-y-1 text-sm">
+              <li>
+                <Link
+                  href="#"
+                  className={`block rounded-md px-3 py-2 transition-colors ${
+                    activeSection === "getting-started"
+                      ? "bg-muted text-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
+                  prefetch={false}
+                >
+                  Introduction
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  className={`block rounded-md px-3 py-2 transition-colors ${
+                    activeSection === "installation"
+                      ? "bg-muted text-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
+                  prefetch={false}
+                >
+                  Installation
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  className={`block rounded-md px-3 py-2 transition-colors ${
+                    activeSection === "configuration"
+                      ? "bg-muted text-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
+                  prefetch={false}
+                >
+                  Configuration
+                </Link>
+              </li>
+            </ul>
           </div>
-        </section>
+          <div className="space-y-1">
+            <h4 className="text-sm font-medium">Core Concepts</h4>
+            <ul className="space-y-1 text-sm">
+              <li>
+                <Link
+                  href="#"
+                  className={`block rounded-md px-3 py-2 transition-colors ${
+                    activeSection === "authentication"
+                      ? "bg-muted text-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
+                  prefetch={false}
+                >
+                  Authentication
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  className={`block rounded-md px-3 py-2 transition-colors ${
+                    activeSection === "authorization"
+                      ? "bg-muted text-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
+                  prefetch={false}
+                >
+                  Authorization
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  className={`block rounded-md px-3 py-2 transition-colors ${
+                    activeSection === "profiles"
+                      ? "bg-muted text-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
+                  prefetch={false}
+                >
+                  Profiles
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  className={`block rounded-md px-3 py-2 transition-colors ${
+                    activeSection === "sessions"
+                      ? "bg-muted text-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
+                  prefetch={false}
+                >
+                  Sessions
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div className="space-y-1">
+            <h4 className="text-sm font-medium">Advanced Topics</h4>
+            <ul className="space-y-1 text-sm">
+              <li>
+                <Link
+                  href="#"
+                  className={`block rounded-md px-3 py-2 transition-colors ${
+                    activeSection === "integrations"
+                      ? "bg-muted text-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
+                  prefetch={false}
+                >
+                  Integrations
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  className={`block rounded-md px-3 py-2 transition-colors ${
+                    activeSection === "customization"
+                      ? "bg-muted text-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
+                  prefetch={false}
+                >
+                  Customization
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  className={`block rounded-md px-3 py-2 transition-colors ${
+                    activeSection === "security"
+                      ? "bg-muted text-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
+                  prefetch={false}
+                >
+                  Security
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  className={`block rounded-md px-3 py-2 transition-colors ${
+                    activeSection === "troubleshooting"
+                      ? "bg-muted text-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
+                  prefetch={false}
+                >
+                  Troubleshooting
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </aside>
+      <main className="flex-1 overflow-auto bg-background px-6 py-8 md:px-12 md:py-12">
+        <div className="mx-auto max-w-4xl">
+          <div className="space-y-8">
+            <section id="getting-started">
+              <h1 className="text-4xl font-bold">Getting Started</h1>
+              <p className="mt-4 text-muted-foreground">
+                Welcome to the Clerk documentation! This guide will help you get started with Clerk and integrate it
+                into your application.
+              </p>
+            </section>
+            <section id="installation">
+              <h2 className="text-2xl font-bold">Installation</h2>
+              <p className="mt-4 text-muted-foreground">
+                To get started, you&apos;ll need to install the Clerk SDK. You can do this using your preferred package
+                manager:
+              </p>
+              <div className="mt-4">
+                <Tabs defaultValue="npm">
+                  <TabsList>
+                    <TabsTrigger value="npm">npm</TabsTrigger>
+                    <TabsTrigger value="yarn">Yarn</TabsTrigger>
+                    <TabsTrigger value="pnpm">pnpm</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="npm">
+                    <div className="rounded-md bg-[#1e1e1e] p-4 dark:bg-[#1e1e1e]">
+                      <pre className="text-sm text-[#d4d4d4]">
+                        <code>npm install @clerk/clerk-react</code>
+                      </pre>
+                      <div className="mt-2 flex justify-end">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="flex items-center gap-2"
+                          onClick={() => handleCopy("npm install @clerk/clerk-react", "installation")}
+                        >
+                          <div className="h-4 w-4" />
+                          Copy
+                        </Button>
+                        {isCopied === "installation" && <span className="ml-2 text-sm text-green-500">Copied!</span>}
+                      </div>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value="yarn">
+                    <div className="rounded-md bg-[#1e1e1e] p-4 dark:bg-[#1e1e1e]">
+                      <pre className="text-sm text-[#d4d4d4]">
+                        <code>yarn add @clerk/clerk-react</code>
+                      </pre>
+                      <div className="mt-2 flex justify-end">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="flex items-center gap-2"
+                          onClick={() => handleCopy("yarn add @clerk/clerk-react", "installation")}
+                        >
+                          <div className="h-4 w-4" />
+                          Copy
+                        </Button>
+                        {isCopied === "installation" && <span className="ml-2 text-sm text-green-500">Copied!</span>}
+                      </div>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value="pnpm">
+                    <div className="rounded-md bg-[#1e1e1e] p-4 dark:bg-[#1e1e1e]">
+                      <pre className="text-sm text-[#d4d4d4]">
+                        <code>pnpm add @clerk/clerk-react</code>
+                      </pre>
+                      <div className="mt-2 flex justify-end">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="flex items-center gap-2"
+                          onClick={() => handleCopy("pnpm add @clerk/clerk-react", "installation")}
+                        >
+                          <div className="h-4 w-4" />
+                          Copy
+                        </Button>
+                        {isCopied === "installation" && <span className="ml-2 text-sm text-green-500">Copied!</span>}
+                      </div>
+                    </div>
+                  </TabsContent>
+                </Tabs>
+              </div>
+            </section>
+            <section id="configuration">
+              <h2 className="text-2xl font-bold">Configuration</h2>
+              <p className="mt-4 text-muted-foreground">
+                After installing the Clerk SDK, you\&apos;ll need to configure it with your Clerk application details. You
+                can do this by adding the following code to your application:
+              </p>
+              <div className="mt-4">
+                <div className="rounded-md bg-[#1e1e1e] p-4 dark:bg-[#1e1e1e]">
+                  <pre className="text-sm text-[#d4d4d4]">
+                    <code>{`import { ClerkProvider } from '@clerk/clerk-react'
 
-        <section className="mb-12">
-          <h2 className="text-2xl font-semibold mb-4">Create User API</h2>
-          
-          <Card className="mb-6">
-            <CardHeader>
-              <CardTitle>1. Request API Path</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <code className="bg-muted text-muted-foreground px-2 py-1 rounded">POST /api/v1/users</code>
-            </CardContent>
-          </Card>
-
-          <Card className="mb-6">
-            <CardHeader>
-              <CardTitle>2. Request Body and Headers</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <h4 className="font-semibold mb-2">Headers</h4>
-              <pre className="bg-muted text-muted-foreground p-2 rounded mb-4">
-                Content-Type: application/json
-                Authorization: Bearer YOUR_API_KEY
-              </pre>
-
-              <h4 className="font-semibold mb-2">Request Body</h4>
-              <pre className="bg-muted text-muted-foreground p-2 rounded mb-4">
-{`{
-  "username": "johndoe",
-  "email": "john.doe@example.com",
-  "firstName": "John",
-  "lastName": "Doe",
-  "password": "securePassword123",
-  "role": "user"
-}`}
-              </pre>
-
-              <h4 className="font-semibold mb-2">Field Descriptions</h4>
-              <ul className="list-disc pl-6">
-                <li><strong>username</strong> (string, required): The unique username for the new user.</li>
-                <li><strong>email</strong> (string, required): The email address of the user.</li>
-                <li><strong>firstName</strong> (string, required): The user&apos;s first name.</li>
-                <li><strong>lastName</strong> (string, required): The user&apos;s last name.</li>
-                <li><strong>password</strong> (string, required): The user&apos;s password. Must be at least 8 characters long.</li>
-                <li><strong>role</strong> (string, optional): The user&apos;s role. Defaults to &apos;user&apos; if not specified.</li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card className="mb-6">
-            <CardHeader>
-              <CardTitle>3. Response Example</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <h4 className="font-semibold mb-2">Successful Response (Status Code: 201 Created)</h4>
-              <pre className="bg-muted text-muted-foreground p-2 rounded mb-4">
-{`{
-  "id": "usr_123456789",
-  "username": "johndoe",
-  "email": "john.doe@example.com",
-  "firstName": "John",
-  "lastName": "Doe",
-  "role": "user",
-  "createdAt": "2023-04-22T10:30:00Z"
-}`}
-              </pre>
-
-              <h4 className="font-semibold mb-2">Error Response (Status Code: 400 Bad Request)</h4>
-              <pre className="bg-muted text-muted-foreground p-2 rounded">
-{`{
-  "error": "Bad Request",
-  "message": "Username already exists",
-  "details": {
-    "field": "username",
-    "issue": "must be unique"
-  }
-}`}
-              </pre>
-            </CardContent>
-          </Card>
-        </section>
-
-        <section>
-          <h2 className="text-2xl font-semibold mb-4">API Request Examples</h2>
-          <Tabs defaultValue="python">
-            <TabsList className="mb-4">
-              <TabsTrigger value="python">Python</TabsTrigger>
-              <TabsTrigger value="javascript">JavaScript</TabsTrigger>
-              <TabsTrigger value="curl">cURL</TabsTrigger>
-            </TabsList>
-            <TabsContent value="python">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Python Example</CardTitle>
-                  <CardDescription>Using the requests library</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <pre className="bg-muted text-muted-foreground p-4 rounded relative">
-                    <Button 
-                      size="sm"
-                      variant="ghost" 
-                      className="absolute top-2 right-2"
-                      onClick={() => copyToClipboard(`import requests
-
-api_url = "https://api.example.com/api/v1/users"
-api_key = "YOUR_API_KEY"
-
-headers = {
-    "Content-Type": "application/json",
-    "Authorization": f"Bearer {api_key}"
-}
-
-data = {
-    "username": "johndoe",
-    "email": "john.doe@example.com",
-    "firstName": "John",
-    "lastName": "Doe",
-    "password": "securePassword123",
-    "role": "user"
-}
-
-response = requests.post(api_url, json=data, headers=headers)
-
-if response.status_code == 201:
-    print("User created successfully:")
-    print(response.json())
-else:
-    print("Error creating user:")
-    print(response.json())`, 'python')}
-                    >
-                      {copiedTab === 'python' ? <CheckIcon className="h-4 w-4" /> : <CopyIcon className="h-4 w-4" />}
-                    </Button>
-{`import requests
-
-api_url = "https://api.example.com/api/v1/users"
-api_key = "YOUR_API_KEY"
-
-headers = {
-    "Content-Type": "application/json",
-    "Authorization": f"Bearer {api_key}"
-}
-
-data = {
-    "username": "johndoe",
-    "email": "john.doe@example.com",
-    "firstName": "John",
-    "lastName": "Doe",
-    "password": "securePassword123",
-    "role": "user"
-}
-
-response = requests.post(api_url, json=data, headers=headers)
-
-if response.status_code == 201:
-    print("User created successfully:")
-    print(response.json())
-else:
-    print("Error creating user:")
-    print(response.json())`}
-                  </pre>
-                </CardContent>
-              </Card>
-            </TabsContent>
-            <TabsContent value="javascript">
-              <Card>
-                <CardHeader>
-                  <CardTitle>JavaScript Example</CardTitle>
-                  <CardDescription>Using the Fetch API</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <pre className="bg-muted text-muted-foreground p-4 rounded relative">
-                    <Button 
-                      size="sm"
-                      variant="ghost" 
-                      className="absolute top-2 right-2"
-                      onClick={() => copyToClipboard(`const apiUrl = 'https://api.example.com/api/v1/users';
-const apiKey = 'YOUR_API_KEY';
-
-const data = {
-  username: 'johndoe',
-  email: 'john.doe@example.com',
-  firstName: 'John',
-  lastName: 'Doe',
-  password: 'securePassword123',
-  role: 'user'
-};
-
-fetch(apiUrl, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': \`Bearer \${apiKey}\`
-  },
-  body: JSON.stringify(data)
+const clerk = Clerk({
+  publicKey: 'your_clerk_public_key'
 })
-  .then(response => response.json())
-  .then(result => {
-    if (response.ok) {
-      console.log('User created successfully:', result);
-    } else {
-      console.error('Error creating user:', result);
-    }
-  })
-  .catch(error => console.error('Error:', error));`, 'javascript')}
-                    >
-                      {copiedTab === 'javascript' ? <CheckIcon className="h-4 w-4" /> : <CopyIcon className="h-4 w-4" />}
-                    </Button>
-{`const apiUrl = 'https://api.example.com/api/v1/users';
-const apiKey = 'YOUR_API_KEY';
 
-const data = {
-  username: 'johndoe',
-  email: 'john.doe@example.com',
-  firstName: 'John',
-  lastName: 'Doe',
-  password: 'securePassword123',
-  role: 'user'
-};
-
-fetch(apiUrl, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': \`Bearer \${apiKey}\`
-  },
-  body: JSON.stringify(data)
-})
-  .then(response => response.json())
-  .then(result => {
-    if (response.ok) {
-      console.log('User created successfully:', result);
-    } else {
-      console.error('Error creating user:', result);
-    }
-  })
-  .catch(error => console.error('Error:', error));`}
+function App() {
+  return (
+    <ClerkProvider client={clerk}>
+      {/* Your app content */}
+    </ClerkProvider>
+  )
+}`}</code>
                   </pre>
-                </CardContent>
-              </Card>
-            </TabsContent>
-            <TabsContent value="curl">
-              <Card>
-                <CardHeader>
-                  <CardTitle>cURL Example</CardTitle>
-                  <CardDescription>Command-line request</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <pre className="bg-muted text-muted-foreground p-4 rounded relative">
-                    <Button 
+                  <div className="mt-2 flex justify-end">
+                    <Button
                       size="sm"
-                      variant="ghost" 
-                      className="absolute top-2 right-2"
-                      onClick={() => copyToClipboard(`curl -X POST https://api.example.com/api/v1/users \\
-  -H "Content-Type: application/json" \\
-  -H "Authorization: Bearer YOUR_API_KEY" \\
-  -d '{
-    "username": "johndoe",
-    "email": "john.doe@example.com",
-    "firstName": "John",
-    "lastName": "Doe",
-    "password": "securePassword123",
-    "role": "user"
-  }'`, 'curl')}
-                    >
-                      {copiedTab === 'curl' ? <CheckIcon className="h-4 w-4" /> : <CopyIcon className="h-4 w-4" />}
-                    </Button>
-{`curl -X POST https://api.example.com/api/v1/users \\
-  -H "Content-Type: application/json" \\
-  -H "Authorization: Bearer YOUR_API_KEY" \\
-  -d '{
-    "username": "johndoe",
-    "email": "john.doe@example.com",
-    "firstName": "John",
-    "lastName": "Doe",
-    "password": "securePassword123",
-    "role": "user"
-  }'`}
-                  </pre>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
-        </section>
-      </main>
+                      variant="outline"
+                      className="flex items-center gap-2"
+                      onClick={() =>
+                        handleCopy(
+                          `
+import { ClerkProvider } from '@clerk/clerk-react'
 
-      <footer className="bg-muted py-6 mt-12">
-        <div className="container mx-auto px-4 text-center text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Platform API. All rights reserved.</p>
+const clerk = Clerk({
+  publicKey: 'your_clerk_public_key'
+})
+
+function App() {
+  return (
+    <ClerkProvider client={clerk}>
+      {/* Your app content */}
+    </ClerkProvider>
+  )
+}`,
+                          "configuration",
+                        )
+                      }
+                    >
+                      <div className="h-4 w-4" />
+                      Copy
+                    </Button>
+                    {isCopied === "configuration" && <span className="ml-2 text-sm text-green-500">Copied!</span>}
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section id="authentication">
+              <h2 className="text-2xl font-bold">Authentication</h2>
+              <p className="mt-4 text-muted-foreground">
+                Clerk provides a set of components and hooks to handle user authentication in your application. Here&apos;s
+                an example of how to use the `SignIn` component:
+              </p>
+              <div className="mt-4">
+                <div className="rounded-md bg-[#1e1e1e] p-4 dark:bg-[#1e1e1e]">
+                  <pre className="text-sm text-[#d4d4d4]">
+                    <code>{`import { SignIn } from '@clerk/clerk-react'
+
+function SignInPage() {
+  return (
+    <div className="flex justify-center">
+      <SignIn />
+    </div>
+  )
+}`}</code>
+                  </pre>
+                  <div className="mt-2 flex justify-end">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="flex items-center gap-2"
+                      onClick={() =>
+                        handleCopy(
+                          `
+import { SignIn } from '@clerk/clerk-react'
+
+function SignInPage() {
+  return (
+    <div className="flex justify-center">
+      <SignIn />
+    </div>
+  )
+}`,
+                          "authentication",
+                        )
+                      }
+                    >
+                      <div className="h-4 w-4" />
+                      Copy
+                    </Button>
+                    {isCopied === "authentication" && <span className="ml-2 text-sm text-green-500">Copied!</span>}
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section id="authorization">
+              <h2 className="text-2xl font-bold">Authorization</h2>
+              <p className="mt-4 text-muted-foreground">
+                Clerk also provides a set of components and hooks to handle user authorization in your application.
+                Here&apos;s an example of how to use the `PrivateRoute` component:
+              </p>
+              <div className="mt-4">
+                <div className="rounded-md bg-[#1e1e1e] p-4 dark:bg-[#1e1e1e]">
+                  <pre className="text-sm text-[#d4d4d4]">
+                    <code>{`import { PrivateRoute } from '@clerk/clerk-react'
+
+function ProtectedPage() {
+  return (
+    <PrivateRoute>
+      <div>This page is only accessible to authenticated users.</div>
+    </Priv`}</code>
+                  </pre>
+                </div>
+              </div>
+            </section>
+          </div>
         </div>
-      </footer>
+      </main>
     </div>
   )
 }
