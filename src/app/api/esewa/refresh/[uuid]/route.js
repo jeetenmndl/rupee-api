@@ -3,7 +3,7 @@ import Transaction from "@/models/transactionModel";
 import {NextResponse} from "next/server";
 
 
-// get users projects 
+// lookup from khalti and update
 export async function POST(req, {params}) {
 
     const data = await req.json();
@@ -11,7 +11,7 @@ export async function POST(req, {params}) {
     try {
 
 
-        const check = await fetch(`${process.env.ESEWA_TEST_LOOKUP}/?product_code=${ESEWA_TEST_PRODUCT_CODE}&total_amount=${data.amount}&transaction_uuid=${params.uuid}`, 
+        const check = await fetch(`${process.env.ESEWA_TEST_LOOKUP}/?product_code=${process.env.ESEWA_TEST_PRODUCT_CODE}&total_amount=${data.amount}&transaction_uuid=${params.uuid}`, 
             {
             method: 'GET',
             headers: {
@@ -20,6 +20,8 @@ export async function POST(req, {params}) {
         },{cache: "no-store"})
             
         const esewaData = await check.json();
+
+        console.log("esewadata : ",esewaData);
 
 
         await connect();
@@ -35,9 +37,12 @@ export async function POST(req, {params}) {
             },
         );
 
+        console.log("updatedTransaction : ",updatedTransaction);
+
+
         return NextResponse.json({
             success: true,
-            data: updatedTransaction
+            data: esewaData
         }, {
             status: 200
         })

@@ -21,8 +21,10 @@ import {Table,TableBody,TableCell,TableHead,TableHeader,TableRow,
 import Image from "next/image"
 import getTransactions from "@/lib/actions/getTransactions"
 import { Separator } from "@/components/ui/separator"
+import RefreshTransaction from "@/components/parts/RefreshTransaction"
 
 export default async function Dashboard({params}) {
+
 
   const result = await fetch(`${process.env.DOMAIN}/api/dashboard/${params.id}`, {
     method: 'GET',
@@ -219,7 +221,7 @@ const statusColor = (status)=>{
                         {item.totalAmount}
                       </TableCell>
                       <TableCell className="text-right font-semibold">
-                        {item.status.toUpperCase()=="PROCESSING"?<Button size="icon" variant="outline"><RefreshCcw size={16} /></Button>:""}
+                        {item.status.toUpperCase()=="PROCESSING"?<RefreshTransaction uuid={item.uuid} amount={item.totalAmount} vendor={item.vendor} />:""}
                       </TableCell>
                     </TableRow>
                     )

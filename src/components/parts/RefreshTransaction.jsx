@@ -4,39 +4,48 @@ import { useState, useTransition } from 'react'
 import { Button } from "@/components/ui/button"
 import { RefreshCcw } from "lucide-react"
 import { revalidatePath } from 'next/cache'
+import refreshTransactionFunction from "@/lib/actions/refreshTransactionFunction";
+import { usePathname } from 'next/navigation'
+import { toast } from '@/hooks/use-toast'
 
-export default function RefreshTransaction({ id, path }) {
+export default function RefreshTransaction({ uuid, amount, vendor }) {
+
+  const path = usePathname();
+
   const [isLoading, setIsLoading] = useState(false)
-  const [isPending, startTransition] = useTransition()
 
   const handleRefresh = async () => {
-    setIsLoading(true)
-    try {
-      const apiUrl = `${process.env.DOMAIN}/api/transactions${id}`
-      const response = await fetch(apiUrl)
-      
-      if (!response.ok) {
-        throw new Error('Failed to fetch data')
-      }
+    setIsLoading(true);
 
-      startTransition(() => {
-        revalidatePath(path)
+    const result = await refreshTransactionFunction(uuid, amount, path, vendor);
+
+    if(result.success){
+      toast({
+        title:"Congratulations!",
+        description: `Transaction update to ${result.data.status}`
       })
-    } catch (error) {
-      console.error('Error refreshing data:', error)
-    } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
+    else{
+      toast({
+        title:"Oops!",
+        description: result.message
+      })
+      setIsLoading(false);
+    }
+    
+    
   }
 
   return (
     <Button 
       onClick={handleRefresh} 
-      disabled={isLoading || isPending}
+      disabled={isLoading}
       aria-label="Refresh data"
+      variant="outline"
       size="icon"
     >
-      <RefreshCcw className={`h-4 w-4 ${isLoading || isPending ? 'animate-spin' : ''}`} />
+      <RefreshCcw className={`h-4 w-4 ${isLoading? 'animate-spin' : ''}`} />
     </Button>
   )
 }

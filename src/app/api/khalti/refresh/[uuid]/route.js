@@ -3,8 +3,10 @@ import Transaction from "@/models/transactionModel";
 import {NextResponse} from "next/server";
 
 
-// get users projects 
-export async function GET(req, {params}) {
+// lookup from khalti and update
+export async function POST(req, {params}) {
+
+    const data = await req.json();
 
     try {
 
