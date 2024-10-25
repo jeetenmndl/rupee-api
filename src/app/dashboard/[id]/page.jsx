@@ -177,6 +177,7 @@ const statusColor = (status)=>{
                     Transaction code
                   </TableHead>
                   <TableHead className="text-right">Amount</TableHead>
+                  <TableHead className="text-right">Action</TableHead>
                 </TableRow>
               </TableHeader>
               
@@ -217,6 +218,9 @@ const statusColor = (status)=>{
                       <TableCell className="text-right font-semibold">
                         {item.totalAmount}
                       </TableCell>
+                      <TableCell className="text-right font-semibold">
+                        {item.status.toUpperCase()=="PROCESSING"?<Button size="icon" variant="outline"><RefreshCcw size={16} /></Button>:""}
+                      </TableCell>
                     </TableRow>
                     )
                   })
@@ -242,21 +246,21 @@ const statusColor = (status)=>{
               <DollarSign className="h-5 w-5 mr-2 text-muted-foreground" />
               <span>Total Revenue</span>
             </div>
-            <span className="font-bold">${totalRevenue.toLocaleString()}</span>
+            <span className="font-semibold">${totalRevenue.toLocaleString()}</span>
           </div>
           <div className="flex justify-between items-center">
             <div className="flex items-center">
               <Building className="h-5 w-5 mr-2 text-muted-foreground" />
               <span>Vendor Charges</span>
             </div>
-            <span className="font-bold">${(3/100)*totalRevenue}</span>
+            <span className="font-semibold">${(3/100)*totalRevenue}</span>
           </div>
           <div className="flex justify-between items-center">
             <div className="flex items-center">
               <CreditCard className="h-5 w-5 mr-2 text-muted-foreground" />
               <span>Platform Charges</span>
             </div>
-            <span className="font-bold">${(1/100)*totalRevenue}</span>
+            <span className="font-semibold">${(1/100)*totalRevenue}</span>
           </div>
           <Separator />
           <div className="flex justify-between items-center">
@@ -264,7 +268,7 @@ const statusColor = (status)=>{
               <Wallet className="h-5 w-5 mr-2 text-muted-foreground" />
               <span>Total Receivable</span>
             </div>
-            <span className="font-bold text-lg">${(96/100)*totalRevenue}</span>
+            <span className="font-semibold text-lg">${(96/100)*totalRevenue}</span>
           </div>
           <Separator />
           {/* <div className="flex justify-between items-center">
