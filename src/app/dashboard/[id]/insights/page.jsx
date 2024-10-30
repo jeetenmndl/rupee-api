@@ -1,7 +1,7 @@
 "use client"
 
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
-import { ArrowDown, ArrowUp, DollarSign, CreditCard, AlertCircle, Percent } from "lucide-react"
+import { DollarSign, CreditCard, Banknote, HandCoins, Coins, ArrowLeftRight } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
@@ -39,7 +39,7 @@ export default function UpdatedInsightsDashboard() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
+            <HandCoins className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">${overallData.totalRevenue.toLocaleString()}</div>
@@ -48,7 +48,7 @@ export default function UpdatedInsightsDashboard() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Successful Transactions</CardTitle>
-            <CreditCard className="h-4 w-4 text-muted-foreground" />
+            <ArrowLeftRight className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{overallData.successfulTransactions.toLocaleString()}</div>
@@ -56,17 +56,8 @@ export default function UpdatedInsightsDashboard() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Failed Transactions</CardTitle>
-            <AlertCircle className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{overallData.failedTransactions.toLocaleString()}</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Average Transaction Value</CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
+            <CreditCard className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">${overallData.averageTransactionValue.toLocaleString()}</div>
@@ -74,8 +65,18 @@ export default function UpdatedInsightsDashboard() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Completion Rate</CardTitle>
-            <Percent className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">Gateway Charges</CardTitle>
+            <Banknote className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{overallData.failedTransactions.toLocaleString()}</div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Rupee API charge</CardTitle>
+            <Coins className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{overallData.completionRate}%</div>
@@ -83,60 +84,6 @@ export default function UpdatedInsightsDashboard() {
         </Card>
       </div>
 
-      {/* Monthly Growth Charts */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <Card>
-          <CardHeader>
-            <CardTitle>Monthly Revenue Growth</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ChartContainer config={{ revenue: { label: "Revenue", color: "hsl(var(--chart-1))" } }} className="h-[200px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={monthlyGrowthData}>
-                  <XAxis dataKey="month" />
-                  <YAxis />
-                  <ChartTooltip content={<ChartTooltipContent />} />
-                  <Bar dataKey="revenue" fill="var(--color-revenue)" />
-                </BarChart>
-              </ResponsiveContainer>
-            </ChartContainer>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Monthly Transaction Growth</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ChartContainer config={{ transactions: { label: "Transactions", color: "hsl(var(--chart-2))" } }} className="h-[200px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={monthlyGrowthData}>
-                  <XAxis dataKey="month" />
-                  <YAxis />
-                  <ChartTooltip content={<ChartTooltipContent />} />
-                  <Bar dataKey="transactions" fill="var(--color-transactions)" />
-                </BarChart>
-              </ResponsiveContainer>
-            </ChartContainer>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Monthly Avg Transaction Value</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ChartContainer config={{ avgValue: { label: "Avg Value", color: "hsl(var(--chart-3))" } }} className="h-[200px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={monthlyGrowthData}>
-                  <XAxis dataKey="month" />
-                  <YAxis />
-                  <ChartTooltip content={<ChartTooltipContent />} />
-                  <Bar dataKey="avgValue" fill="var(--color-avgValue)" />
-                </BarChart>
-              </ResponsiveContainer>
-            </ChartContainer>
-          </CardContent>
-        </Card>
-      </div>
 
       {/* Vendor Metrics */}
       <Card>
@@ -209,10 +156,10 @@ export default function UpdatedInsightsDashboard() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Vendor</TableHead>
-                <TableHead>Revenue</TableHead>
-                <TableHead>Avg Transaction Value</TableHead>
-                <TableHead>Successful Transactions</TableHead>
+                <TableHead className="font-semibold">Vendor</TableHead>
+                <TableHead className="font-semibold">Revenue</TableHead>
+                <TableHead className="font-semibold">Avg Transaction Value</TableHead>
+                <TableHead className="font-semibold">Successful Transactions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -229,34 +176,7 @@ export default function UpdatedInsightsDashboard() {
         </CardContent>
       </Card>
 
-      {/* Monthly Growth Table */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Monthly Growth Details</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Month</TableHead>
-                <TableHead>Revenue</TableHead>
-                <TableHead>Transactions</TableHead>
-                <TableHead>Avg Transaction Value</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {monthlyGrowthData.map((month) => (
-                <TableRow key={month.month}>
-                  <TableCell>{month.month}</TableCell>
-                  <TableCell>${month.revenue.toLocaleString()}</TableCell>
-                  <TableCell>{month.transactions}</TableCell>
-                  <TableCell>${month.avgValue}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+
     </div>
   )
 }

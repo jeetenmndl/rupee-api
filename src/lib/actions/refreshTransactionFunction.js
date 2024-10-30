@@ -22,8 +22,11 @@ const refreshTransactionFunction = async (uuid, amount, path, vendor)=>{
 
     revalidatePath(path);
 
-   
-    return {success:true, data:result.data}
+   if(result.success){
+     return {success:true, data:result.data}
+   }else{
+    return {success:false, message:"INTERNAL SERVER ERROR"}
+   }
 
   }
   catch(error){

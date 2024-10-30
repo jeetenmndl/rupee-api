@@ -24,8 +24,8 @@ const DashboardNavLinks = () => {
     
 
   return (
-    <div className=" px-8 border-b ">
-        <div className="flex gap-1 items-center">
+    <div className=" px-8 border-b">
+        <div className="flex gap-1 items-center ">
             {
                 navLinks.map((link)=>{
 
