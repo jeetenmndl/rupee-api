@@ -6,12 +6,11 @@ const settlementSchema = new mongoose.Schema({
     trim: true,
     required: true,
   },
-  userID:{
+  totalAmount:{
     type: String,
-    trim: true,
     required: true,
   },
-  totalAmount:{
+  status:{
     type: String,
     required: true,
   },

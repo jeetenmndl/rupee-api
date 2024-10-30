@@ -22,6 +22,7 @@ import Image from "next/image"
 import getTransactions from "@/lib/actions/getTransactions"
 import { Separator } from "@/components/ui/separator"
 import RefreshTransaction from "@/components/parts/RefreshTransaction"
+import RefreshDashboard from "@/components/parts/RefreshDashboard"
 
 export default async function Dashboard({params}) {
 
@@ -153,11 +154,9 @@ const statusColor = (status)=>{
               </div>
 
               <div className="ml-auto flex items-center gap-2">
-              <Button variant="outline" size="sm">
-                <RefreshCcw size={18} />
-              </Button>
+              <RefreshDashboard />
               <Button asChild size="sm" className=" gap-1 bg-main hover:bg-purple-800">
-                <Link href="#">
+                <Link href={"/dashboard/"+params.id+"/transactions"}>
                   View All
                   <ArrowUpRight className="h-4 w-4" />
                 </Link>

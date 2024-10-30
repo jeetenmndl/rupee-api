@@ -13,23 +13,47 @@ import {
 } from "@/components/ui/dialog"
 import { Separator } from "@/components/ui/separator"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Badge } from '@/components/ui/badge'
 
 
-export default function SettlementPage() {
+export default async function SettlementPage({params}) {
+
+  const result = await fetch(`${process.env.DOMAIN}/api/dashboard/${params.id}/settlement`, {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+}, {cache: "no-store"});
+
+const response = await result.json();
+console.log(response)
 
   const settlementData = {
-    totalRevenue: 50000,
-    vendorCharges: 5000,
-    platformCharges: 2500,
-    receivableAmount: 42500,
-    transactionCount: 1250
+    totalRevenue: response.data.totalRevenue,
+    vendorCharges: response.data.totalRevenue*3/100,
+    platformCharges: response.data.totalRevenue*1/100,
+    receivableAmount: response.data.totalRevenue*96/100,
+    transactionCount: response.data.transactionCount
   }
 
-  const settlementHistory = [
-    { date: "2024-10-15", amount: 38000 },
-    { date: "2024-10-01", amount: 41200 },
-    { date: "2024-09-15", amount: 39500 },
-  ]
+  const settlementHistory = response.data.settlement;
+
+  const badgeColor = (status)=>{
+    switch (status) {
+      case "pending":
+        return "bg-orange-200"
+
+      case "success":
+        return "bg-green-300"
+
+      case "cancelled":
+        return "bg-red-300"
+          
+      default:
+        return "bg-gray-200"
+
+    }
+  }
 
   return (
     <main>
@@ -87,22 +111,31 @@ export default function SettlementPage() {
           <CardTitle className="text-2xl">Settlement History</CardTitle>
         </CardHeader>
         <CardContent>
+          {
+            settlementHistory.length==0?
+            <p className='text-lg font-semibold mt-8 text-gray-500'>No Recent Settlements</p>
+            :
+          
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Date</TableHead>
+                <TableHead>Status</TableHead>
                 <TableHead className="text-right">Amount</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {settlementHistory.map((settlement, index) => (
+              {
+              settlementHistory.map((settlement, index) => (
                 <TableRow key={index}>
                   <TableCell>{settlement.date}</TableCell>
+                  <TableCell><Badge className={badgeColor(settlement.status)+" "+"text-black"}>{settlement.status}</Badge></TableCell>
                   <TableCell className="text-right">र {settlement.amount.toLocaleString()}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
+}
         </CardContent>
       </Card>
     </div>
@@ -114,7 +147,7 @@ export default function SettlementPage() {
     <div className="mt-8 md:flex justify-center space-x-4">
       <Dialog>
         <DialogTrigger asChild>
-          <Button className="w-full sm:w-auto">
+          <Button disabled className="w-full sm:w-auto">
             Initiate Settlement
             <ArrowRight className="ml-2 h-4 w-4" />
           </Button>

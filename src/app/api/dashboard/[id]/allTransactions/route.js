@@ -11,7 +11,7 @@ export async function GET(req, {params}) {
         await connect();
         
 
-        const result = await Transaction.find({ projectID: params.id });
+        const result = await Transaction.find({ projectID: params.id }) .sort({ date: -1 });
           
 
             return NextResponse.json({
