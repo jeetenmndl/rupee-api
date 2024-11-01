@@ -2,18 +2,10 @@
 import { DollarSign, CreditCard, Building, Wallet, FileText, ArrowRight, Download, Calendar } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { 
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
 import { Separator } from "@/components/ui/separator"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from '@/components/ui/badge'
+import SettlementButton from '@/components/parts/SettlementButton'
 
 
 export default async function SettlementPage({params}) {
@@ -28,15 +20,22 @@ export default async function SettlementPage({params}) {
 const response = await result.json();
 console.log(response)
 
-  const settlementData = {
+  const settlementData = response.data?{
     totalRevenue: response.data.totalRevenue,
     vendorCharges: response.data.totalRevenue*3/100,
     platformCharges: response.data.totalRevenue*1/100,
     receivableAmount: response.data.totalRevenue*96/100,
     transactionCount: response.data.transactionCount
+  }:
+  {
+    totalRevenue: 0,
+    vendorCharges: 0,
+    platformCharges: 0,
+    receivableAmount: 0,
+    transactionCount: 0
   }
 
-  const settlementHistory = response.data.settlement;
+  const settlementHistory = response.data?response.data.settlement:[];
 
   const badgeColor = (status)=>{
     switch (status) {
@@ -145,26 +144,7 @@ console.log(response)
     </p>
   </div>
     <div className="mt-8 md:flex justify-center space-x-4">
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button disabled className="w-full sm:w-auto">
-            Initiate Settlement
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Confirm Settlement</DialogTitle>
-            <DialogDescription>
-              Are you sure you want to initiate the settlement process? This action cannot be undone.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button variant="outline" >Cancel</Button>
-            <Button>Confirm Settlement</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <SettlementButton id={params.id} amount={settlementData.receivableAmount}  />
       <Button variant="outline" className="w-full mt-4 md:w-auto md:mt-0">
         Download Report
         <Download className="ml-2 h-4 w-4" />
