@@ -38,7 +38,7 @@ const SettlementButton = (props) => {
   return (
     <Dialog>
         <DialogTrigger asChild>
-          <Button className="w-full sm:w-auto">
+          <Button className="w-full sm:w-auto"   >
             Initiate Settlement
             <ArrowRight className="ml-2 h-4 w-4" />
           </Button>

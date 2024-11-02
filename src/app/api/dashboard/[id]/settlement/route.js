@@ -15,52 +15,33 @@ export async function GET(req, {params}) {
         await connect();
         
 
-        const result = await Transaction.aggregate([
-            // 1. Match transactions with projectID and case-insensitive status "complete" or "completed"
+        const { id } = params;
+        
+          const transactionStats = await Transaction.aggregate([
             {
               $match: {
-                projectID: params.id,
-                status: { $regex: /^complete(d)?$/i } // Case-insensitive match for complete/completed
+                projectID: id,
+                status: { $regex: /^complete(d)?$/i } 
               }
             },
-      
-            // 2. Group to calculate total revenue and number of transactions
             {
               $group: {
-                _id: null, // Group all matching transactions together
-                totalRevenue: { $sum: { $toDouble: '$totalAmount' } }, // Sum of totalAmount
-                transactionCount: { $sum: 1 } // Count of successful transactions
-              }
-            },
-      
-            // 3. Lookup settlements from the Settlement collection for the same projectID
-            {
-              $lookup: {
-                from: 'settlement', // Assuming the name of the settlement collection is "settlement"
-                localField: 'projectID', // Use projectID from the current document
-                foreignField: 'projectID', // Match projectID in Settlement collection
-                as: 'settlement' // Store matching settlement in "settlement"
-              }
-            },
-      
-            // 4. Project the results
-            {
-              $project: {
-                _id: 0,
-                totalRevenue: 1,
-                transactionCount: 1,
-                settlement: 1 // Include all the matching settlements
+                _id: null,
+                totalRevenue: { $sum: { $toDouble: '$totalAmount' } }, 
+                transactionCount: { $sum: 1 } 
               }
             }
           ]);
-          
-
-            return NextResponse.json({
-                success: true,
-                data: result[0],
-            }, {
-                status: 200
-            })
+      
+          const settlement = await Settlement.find({ projectID: id });
+      
+          const responseData = {
+            success: true,
+            transactionStats: transactionStats[0] || { totalRevenue: 0, transactionCount: 0 },
+            settlement: settlement || {}
+          };
+      
+          return NextResponse.json(responseData);
         
 
 
@@ -114,7 +95,9 @@ export async function POST(request, res) {
     const completedTransactions = await Transaction.find({
       projectID: id,
       status: { $in: ['complete', 'completed'] }  // Case insensitive matching for complete/completed
-    }).session(session);
+    }).lean().session(session);
+
+    console.log("completed transactions", completedTransactions);
 
     await History.updateOne(
       { projectID: id }, 

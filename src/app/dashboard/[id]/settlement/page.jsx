@@ -20,22 +20,15 @@ export default async function SettlementPage({params}) {
 const response = await result.json();
 console.log(response)
 
-  const settlementData = response.data?{
-    totalRevenue: response.data.totalRevenue,
-    vendorCharges: response.data.totalRevenue*3/100,
-    platformCharges: response.data.totalRevenue*1/100,
-    receivableAmount: response.data.totalRevenue*96/100,
-    transactionCount: response.data.transactionCount
-  }:
-  {
-    totalRevenue: 0,
-    vendorCharges: 0,
-    platformCharges: 0,
-    receivableAmount: 0,
-    transactionCount: 0
+  const settlementData = {
+    totalRevenue: response.transactionStats.totalRevenue,
+    vendorCharges: response.transactionStats.totalRevenue*3/100,
+    platformCharges: response.transactionStats.totalRevenue*1/100,
+    receivableAmount: response.transactionStats.totalRevenue*96/100,
+    transactionCount: response.transactionStats.transactionCount
   }
 
-  const settlementHistory = response.data?response.data.settlement:[];
+  const settlementHistory = response.settlement;
 
   const badgeColor = (status)=>{
     switch (status) {
@@ -127,9 +120,9 @@ console.log(response)
               {
               settlementHistory.map((settlement, index) => (
                 <TableRow key={index}>
-                  <TableCell>{settlement.date}</TableCell>
+                  <TableCell>{settlement.date.substring(0,10) }</TableCell>
                   <TableCell><Badge className={badgeColor(settlement.status)+" "+"text-black"}>{settlement.status}</Badge></TableCell>
-                  <TableCell className="text-right">र {settlement.amount.toLocaleString()}</TableCell>
+                  <TableCell className="text-right font-semibold">र {settlement.totalAmount.toLocaleString()}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
