@@ -33,7 +33,7 @@ export async function GET(req, {params}) {
             }
           ]);
       
-          const settlement = await Settlement.find({ projectID: id });
+          const settlement = await Settlement.find({ projectID: id }).sort({ date: -1 });;
       
           const responseData = {
             success: true,
@@ -94,7 +94,7 @@ export async function POST(request, res) {
     // 3. Append all completed transactions to the recentTransactions in the History collection
     const completedTransactions = await Transaction.find({
       projectID: id,
-      status: { $in: ['complete', 'completed'] }  // Case insensitive matching for complete/completed
+      status: { $regex: /^complete(d)?$/i }  // Case insensitive matching for complete/completed
     }).lean().session(session);
 
     console.log("completed transactions", completedTransactions);
@@ -102,7 +102,7 @@ export async function POST(request, res) {
     await History.updateOne(
       { projectID: id }, 
       { $push: { transactions: { $each: completedTransactions } },
-        $set: { projectID: id } }, 
+        $set: { projectID: id, date: Date.now() } }, 
       { session, upsert: true }
     );
 

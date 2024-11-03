@@ -67,7 +67,7 @@ const statusColor = (status)=>{
               </div>
 
               <div className="ml-auto ">
-                <p className='text-gray-500 font-medium'>{response.data.updatedAt || "---"}</p>
+                <p className='text-gray-500 text-sm font-medium'>Updated at: {response.data.updatedAt.substring(0,10) || "---"}</p>
               </div>
             </CardHeader>
 
