@@ -8,8 +8,7 @@ const navLinks= [
     {name: "Projects", href: "/projects"},
     {name: "Create Project", href: "/projects/create-project"},
     {name: "Insights", href: "/projects/insights"},
-    {name: "Transactions", href: "/projects/transactions"},
-    {name: "KYC", href: "/kyc"},
+    {name: "KYC", href: "/projects/kyc"},
 ]
 
 const ProjectNavLinks = () => {
@@ -18,7 +17,7 @@ const ProjectNavLinks = () => {
 
   return (
     <div className=" px-8 border-b ">
-        <div className="flex gap-1 items-center">
+        <div className="flex gap-2 items-center">
             {
                 navLinks.map((link)=>{
 

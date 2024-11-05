@@ -17,7 +17,7 @@ const page = async () => {
         <section className='flex items-center justify-between px-24'>
         <div className='flex items-baseline gap-4'>
             <h1 className='text-3xl font-bold'>{user.data[0].firstName}&apos;s Projects</h1>
-            <span className='text-sm text-gray-700'>{user.data.length} projects</span>
+            <span className='text-sm text-gray-700'>{user.data[0].userProjects.length} projects</span>
         </div>
         <div>
         <Link href="/projects/create-project">

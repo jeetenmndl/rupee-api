@@ -6,34 +6,45 @@ const kycSchema = new mongoose.Schema({
     trim: true,
     required: true,
   },
-  description: {
+  address: {
     type: String,
     required: true,
   },
-  websiteUrl: { 
-    type: String, 
-    trim: true 
+  phone: {
+    type: String,
+    trim: true,
+    required: true,
+  },
+  email: {
+    type: String,
+    trim: true,
+    required: true,
   },
   userID: { 
     type: String, 
     required: true 
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
+  idType: {
+    type: String,
+    required: true,
   },
-  updatedAt: {
+  idNumber: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  idPhoto: {
+    type: String,
+    trim: true,
+    required: true,
+  },
+  date: {
     type: Date,
     default: Date.now,
   },
   status: {
     type: String,
-    default: "ready",
-  },
-  apiKey: {
-    type: String,
-    required: true,
-    trim: true,
+    default: "pending",
   },
 });
 

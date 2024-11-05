@@ -3,7 +3,9 @@ import Logo from "@/../public/logoCircle.png"
 import Image from "next/image"
 import { Button } from "../ui/button"
 import Link from "next/link"
-import { LogIn } from "lucide-react"
+import { LayoutDashboard, LogIn } from "lucide-react"
+import { SignedOut } from "@clerk/nextjs"
+import { SignedIn } from "@clerk/nextjs"
    
   export default function NavbarHome() {
     return (
@@ -25,9 +27,18 @@ import { LogIn } from "lucide-react"
                 <Link href="/">Pricing</Link>
                 <Link href="/">Feedback</Link>
 
-                <Link href="/projects">
-                    <Button variant="outline" className="bg-main text-white hover:bg-main hover:text-white hover:underline group duration-1000">Log in <LogIn size={18} className="ml-2 hidden group-hover:block duration-1000" /></Button>
+            <SignedOut>
+                <Link href="/sign-in">
+                    <Button variant="outline" className="bg-main text-white hover:bg-purple-700 hover:text-white group duration-100">Log in <LogIn size={18} className="ml-2" /></Button>
                 </Link>
+            </SignedOut>
+
+            <SignedIn>
+                <Link href="/projects">
+                    <Button variant="outline" className="bg-main text-white hover:bg-purple-700 hover:text-white group duration-100">Dashboard <LayoutDashboard size={18} className="ml-2" /></Button>
+                </Link>
+            </SignedIn>
+                
             </div>
 
         </div>
