@@ -23,6 +23,7 @@ import { Textarea } from '@/components/ui/textarea'
 import postProject from '@/lib/actions/postProject'
 import { useToast } from '@/hooks/use-toast'
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectItem } from '../ui/select'
+import uploadImage from '@/lib/actions/uploadImage'
   
 
 
@@ -86,38 +87,35 @@ const KycForm = () => {
     async function onSubmit(values) {
         console.log("values are:", values);
         
-        // try {
-        //     setLoading(true);
+        try {
+            setLoading(true);
 
-        //     const response = await postProject(values);
 
-        //     console.log("in create project page", response);
-        //     if(response.posted==true){
-        //         toast({
-        //             title: "Congratulations !",
-        //             description: "Project created sucessfully.",
-        //         })
-        //         router.push("/projects");
-                
-        //     }
-        //     else{
-        //         toast({
-        //             title: "Oops !",
-        //             description: response.message,
-        //             variant: "destructive",
-        //         })
-        //     }
-        // } catch (error) {
-        //     console.log(error)
-        //     toast({
-        //         title: "Oops !",
-        //         description: "Some error occured."+error,
-        //         variant: "destructive",
-        //     })
+            const response = await uploadImage(values.idPhoto);
+
+            console.log("in upload page", response);
+
+            if(!response.success){
+                toast({
+                    title: "Oops !",
+                    description: response.message,
+                    variant: "destructive",
+                })
+            }
             
-        // }finally{
-        //     setLoading(false);
-        // }
+
+
+        } catch (error) {
+            console.log(error)
+            toast({
+                title: "Oops !",
+                description: "Some error occured."+error,
+                variant: "destructive",
+            })
+            
+        }finally{
+            setLoading(false);
+        }
     }
 
   return (

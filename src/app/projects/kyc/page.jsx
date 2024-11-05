@@ -1,4 +1,5 @@
 import KycForm from '@/components/sections/KycForm'
+import KycFormSection from '@/components/sections/KycFormSection'
 import React from 'react'
 
 const page = () => {
@@ -11,7 +12,8 @@ const page = () => {
     </section>
 
     <section className='px-24 pt-12 flex justify-center'>
-      <KycForm />
+      {/* <KycForm /> */}
+      <KycFormSection />
     </section>
 
     </main>
