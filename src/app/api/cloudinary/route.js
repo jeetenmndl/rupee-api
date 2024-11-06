@@ -10,23 +10,51 @@ cloudinary.config({
 
 export async function POST(req, res) {
     try {
-      const request = await req.json();
-      const { file } = request;
+      const formData = await req.formData();
 
-      // Upload with transformations
-      const uploadResponse = await cloudinary.uploader.upload(file, {
-        folder: 'rupeeUserID',
-        quality: 'auto:eco',
-        format: 'jpg',
-        crop: 'scale',   
+      const file = formData.get("idPhoto");
+
+      const bytes = await file.arrayBuffer();
+      const buffer = Buffer.from(bytes);
+
+     const result = await new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream(
+          { 
+            folder: 'rupeeUserID',
+            quality: 'auto:eco',
+            format: 'jpg',
+          },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+          }
+        );
+        uploadStream.end(buffer);
       });
 
-        return NextResponse.json({
-            success: true,
-            url: uploadResponse.secure_url
-        }, {
-            status: 200
-        })
+      return NextResponse.json({
+          success: true,
+          url: result.secure_url
+      }, {
+          status: 200
+      })
+
+
+
+      // Upload with transformations
+      // const uploadResponse = await cloudinary.uploader.upload(file, {
+      //   folder: 'rupeeUserID',
+      //   quality: 'auto:eco',
+      //   format: 'jpg',
+      //   crop: 'scale',   
+      // });
+
+        // return NextResponse.json({
+        //     success: true,
+        //     url: uploadResponse.secure_url
+        // }, {
+        //     status: 200
+        // })
 
     } catch (error) {
       console.error('Cloudinary upload error:', error);

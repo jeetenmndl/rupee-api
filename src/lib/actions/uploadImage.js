@@ -3,11 +3,11 @@
 import { currentUser } from "@clerk/nextjs/server";
 
 
-const uploadImage = async (idPhoto)=>{
+const uploadImage = async (formData)=>{
 
     const user =  await currentUser();
     const userID = user.id;
-    console.log(userID)
+    console.log(userID, "in kyc post")
 
     // const imageFormData = new FormData();
     // imageFormData.append('file', idPhoto);
@@ -19,10 +19,10 @@ const uploadImage = async (idPhoto)=>{
   try{
     const response = await fetch(`${process.env.DOMAIN}/api/cloudinary`, {
       method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({file: idPhoto})
+      // headers: {
+          // 'Content-Type': 'application/json',
+      // },
+      body: formData
     
     })
       
