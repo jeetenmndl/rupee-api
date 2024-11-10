@@ -16,8 +16,8 @@ import ProjectNavLinks from "../parts/ProjectNavLinks"
             
             {/* top left  */}
             <div className="flex items-center gap-2">
-                <Image src={Logo} className="h-12 w-auto" alt="Rupee API" />
-                <h2 className="text-3xl font-bold">Rupee API</h2>
+            <Link href="/"><Image src={Logo} className="h-12 w-auto" alt="Rupee API" /></Link>
+            <Link href="/"><h2 className="text-3xl font-bold">Rupee API</h2></Link>
 
                 <div className="flex items-center pl-8 gap-1">
                     <div className="h-5 w-5 rounded-full bg-purple-600"></div>
