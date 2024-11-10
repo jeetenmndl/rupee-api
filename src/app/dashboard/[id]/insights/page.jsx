@@ -5,9 +5,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import VendorChart from "@/components/sections/VendorChart"
+import DailyChart from "@/components/sections/DailyChart"
 
 
-export default async function UpdatedInsightsDashboard({params}) {
+export default async function Insights({params}) {
 
 
   const result = await fetch(`${process.env.DOMAIN}/api/dashboard/${params.id}/insights`, {
@@ -30,57 +31,61 @@ const overallData = {
 
   
   return (
-    <div className="container px-2 lg:px-24 py-8 space-y-8">
+    <div className=" px-2 lg:px-24 py-8 space-y-8">
 
       {/* Overall Metrics */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
-        <Card>
+        <Card className="group">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-            <HandCoins className="h-4 w-4 text-muted-foreground" />
+            <HandCoins className="h-4 w-4 text-muted-foreground group-hover:text-main" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">रु {overallData.totalRevenue.toLocaleString()}</div>
+            <div className="text-2xl font-bold group-hover:text-main">रु {overallData.totalRevenue.toLocaleString()}</div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="group">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Successful Transactions</CardTitle>
-            <ArrowLeftRight className="h-4 w-4 text-muted-foreground" />
+            <ArrowLeftRight className="h-4 w-4 text-muted-foreground group-hover:text-main" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{overallData.successfulTransactions.toLocaleString()}</div>
+            <div className="text-2xl font-bold group-hover:text-main">{overallData.successfulTransactions.toLocaleString()}</div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="group">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Average Transaction Value</CardTitle>
-            <CreditCard className="h-4 w-4 text-muted-foreground" />
+            <CreditCard className="h-4 w-4 text-muted-foreground group-hover:text-main" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">रु {overallData.averageTransactionValue.toLocaleString()}</div>
+            <div className="text-2xl font-bold group-hover:text-main">रु {overallData.averageTransactionValue.toLocaleString()}</div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="group">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Gateway Charges</CardTitle>
-            <Banknote className="h-4 w-4 text-muted-foreground" />
+            <Banknote className="h-4 w-4 text-muted-foreground group-hover:text-main" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">रु {overallData.gatewayCharge.toLocaleString()}</div>
+            <div className="text-2xl font-bold group-hover:text-main">रु {overallData.gatewayCharge.toLocaleString()}</div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="group">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Rupee API charge</CardTitle>
-            <Coins className="h-4 w-4 text-muted-foreground" />
+            <Coins className="h-4 w-4 text-muted-foreground group-hover:text-main" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">रु {overallData.rupeeCharge}</div>
+            <div className="text-2xl font-bold group-hover:text-main">रु {overallData.rupeeCharge}</div>
           </CardContent>
         </Card>
       </div>
+
+      
+      {/* daily chart */}
+      <DailyChart projectID={params.id} />
 
 
       <VendorChart vendorData={response.data.vendorStats || []}  />

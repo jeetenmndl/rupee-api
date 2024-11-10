@@ -12,21 +12,19 @@ const VendorChart = ({vendorData}) => {
       <CardTitle>Vendor Metrics</CardTitle>
     </CardHeader>
     <CardContent>
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
         <Card>
           <CardHeader>
             <CardTitle>Vendor Revenue</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-0 xl:px-2">
             <ChartContainer config={{ revenue: { label: "Revenue", color: "hsl(var(--chart-1))" } }} className="h-[200px]">
-              <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={vendorData} layout="vertical">
                   <XAxis type="number" />
                   <YAxis dataKey="vendor" type="category" />
                   <ChartTooltip content={<ChartTooltipContent />} />
-                  <Bar dataKey="totalRevenue" fill="var(--color-revenue)" />
+                  <Bar dataKey="totalRevenue" radius={[0, 4, 4, 0]} fill="var(--color-revenue)" />
                 </BarChart>
-              </ResponsiveContainer>
             </ChartContainer>
           </CardContent>
         </Card>
@@ -35,16 +33,14 @@ const VendorChart = ({vendorData}) => {
           <CardHeader>
             <CardTitle>Vendor Avg Transaction Value</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-0 xl:px-2">
             <ChartContainer config={{ avgTransactionValue: { label: "Avg Transaction Value", color: "hsl(var(--chart-2))" } }} className="h-[200px]">
-              <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={vendorData} layout="vertical">
                   <XAxis type="number" />
                   <YAxis dataKey="vendor" type="category" />
                   <ChartTooltip content={<ChartTooltipContent />} />
-                  <Bar dataKey="avgTransactionValue" fill="var(--color-avgTransactionValue)" />
+                  <Bar dataKey="avgTransactionValue" radius={[0, 4, 4, 0]} fill="var(--color-avgTransactionValue)" />
                 </BarChart>
-              </ResponsiveContainer>
             </ChartContainer>
           </CardContent>
         </Card>
@@ -53,16 +49,14 @@ const VendorChart = ({vendorData}) => {
           <CardHeader>
             <CardTitle>Vendor Successful Transactions</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-0 xl:px-2">
             <ChartContainer config={{ successfulTransactions: { label: "Successful Transactions", color: "hsl(var(--chart-3))" } }} className="h-[200px]">
-              <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={vendorData} layout="vertical">
                   <XAxis type="number" />
                   <YAxis dataKey="vendor" type="category" />
                   <ChartTooltip content={<ChartTooltipContent />} />
-                  <Bar dataKey="transactionCount" fill="var(--color-successfulTransactions)" />
+                  <Bar dataKey="transactionCount" radius={[0, 4, 4, 0]} fill="var(--color-successfulTransactions)" />
                 </BarChart>
-              </ResponsiveContainer>
             </ChartContainer>
           </CardContent>
         </Card>
