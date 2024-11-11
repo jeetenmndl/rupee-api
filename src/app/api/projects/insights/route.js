@@ -20,11 +20,10 @@ export async function POST(req) {
     
         // 2. Aggregate transaction data for these projectIDs
         const result = await Transaction.aggregate([
-          // Match transactions for the user's projects with status "complete" or "completed" (case insensitive)
           {
             $match: {
               projectID: { $regex: new RegExp(projectIDs.join('|')), $options: 'i' },
-              status: { $regex: /^complete(d)?$/i }  // Matches "complete" or "completed" case-insensitively
+              status: { $regex: /^complete(d)?$/i }  
             }
           },
     
@@ -32,19 +31,23 @@ export async function POST(req) {
           {
             $group: {
               _id: {
-                date: { $dateToString: { format: "%Y-%m-%d", date: "$date" } }  // Group by date in YYYY-MM-DD format
+                date: { $dateToString: { format: "%Y-%m-%d", date: "$date" } } 
               },
-              dailyRevenue: { $sum: { $toDouble: "$totalAmount" } }, // Sum of totalAmount per day
-              dailyTransactionCount: { $sum: 1 }  // Count of transactions per day
+              dailyRevenue: { $sum: { $toDouble: "$totalAmount" } }, 
+              dailyTransactionCount: { $sum: 1 }  
             }
+          },
+
+          {
+            $sort: { "_id.date": 1 }
           },
     
           // Calculate total revenue and total transaction count across all dates
           {
             $group: {
               _id: null,
-              totalRevenue: { $sum: "$dailyRevenue" }, // Sum dailyRevenue for total revenue
-              totalTransactionCount: { $sum: "$dailyTransactionCount" }, // Sum dailyTransactionCount for total transactions
+              totalRevenue: { $sum: "$dailyRevenue" }, 
+              totalTransactionCount: { $sum: "$dailyTransactionCount" }, 
               transactionsByDate: { $push: { date: "$_id.date", revenue: "$dailyRevenue", transactions: "$dailyTransactionCount" } }
             }
           },
@@ -65,6 +68,7 @@ export async function POST(req) {
             return NextResponse.json({
                 success: true,
                 data: result,
+                projects: projectIDs
             }, {
                 status: 200
             })
