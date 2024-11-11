@@ -1,7 +1,11 @@
 import Image from 'next/image'
 import Logo from "@/../public/logoCircle.png"
+import { currentUser } from '@clerk/nextjs/server'
 
-export default function Loading() {
+export default async function Loading() {
+  const user = await currentUser();
+  console.log(user.id)
+  
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-white">
       <div className="relative">

@@ -114,7 +114,7 @@ import getDailyInsights from "@/lib/actions/getDailyInsights"
 
 const chartConfig = {
   views: {
-    label: "Page Views",
+    label: " ",
   },
   revenue: {
     label: "Revenue",
@@ -240,7 +240,7 @@ export default function DailyChart({projectID}) {
                 />
               }
             />
-            <Bar dataKey={activeChart} fill={`var(--color-${activeChart})`} />
+            <Bar dataKey={activeChart} fill={`var(--color-${activeChart})`}  />
           </BarChart>
         </ChartContainer>
       </CardContent>

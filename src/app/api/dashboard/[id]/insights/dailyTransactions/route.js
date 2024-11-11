@@ -13,7 +13,11 @@ export async function GET(req, {params}) {
 
         const result = await Transaction.aggregate([
             {
-              $match: { projectID: params.id }
+              $match: { 
+                projectID: params.id, 
+                status: { $regex: /^complete(d)?$/i } 
+              },
+              
             },
         
             {
