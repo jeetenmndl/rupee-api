@@ -29,7 +29,7 @@ import ProjectNavLinks from "../parts/ProjectNavLinks"
             {/* top right */}
             <div className="flex items-center gap-6">
                 <Link href="/" className="text-sm text-gray-700">Home</Link>
-                <Link href="/" className="text-sm text-gray-700">Docs</Link>
+                <Link href="/docs" className="text-sm text-gray-700">Docs</Link>
                 <Link href="/" className="text-sm text-gray-700">Feedback</Link>
 
                 <SignedIn>

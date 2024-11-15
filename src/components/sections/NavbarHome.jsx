@@ -23,8 +23,8 @@ import { SignedIn } from "@clerk/nextjs"
 
             {/* top right */}
             <div className="flex items-center gap-10 [&>a]:text-sm [&>a]:text-gray-700  hover:[&>a]:underline hover:[&>a]:text-main">
-                <Link href="/">Docs</Link>
-                <Link href="/">Pricing</Link>
+                <Link href="/docs">Docs</Link>
+                <Link href="/pricing">Pricing</Link>
                 <Link href="/">Feedback</Link>
 
             <SignedOut>
