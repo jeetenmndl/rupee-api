@@ -39,180 +39,17 @@ export default function Docs() {
     }
   }, [])
   return (
-    <div className="flex min-h-screen w-full">
+    <div className="flex min-h-screen w-full px-8">
 
-      <aside className="sticky top-0 hidden h-screen w-64 shrink-0 border-r bg-background px-6 py-8 md:block">
-        <nav className="space-y-6">
-          <div className="space-y-1">
-            <h4 className="text-sm font-medium">Getting Started</h4>
-            <ul className="space-y-1 text-sm">
-              <li>
-                <Link
-                  href="#"
-                  onClick={() => handleLinkClick("getting-started")}
-                  className={`block rounded-md px-3 py-2 transition-colors ${
-                    activeSection === "getting-started"
-                      ? "bg-muted text-foreground"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                  }`}
-                  prefetch={false}
-                >
-                  Introduction
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  onClick={() => handleLinkClick("installation")}
-                  className={`block rounded-md px-3 py-2 transition-colors ${
-                    activeSection === "installation"
-                      ? "bg-muted text-foreground"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                  }`}
-                  prefetch={false}
-                >
-                  Installation
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  onClick={() => handleLinkClick("configuration")}
-                  className={`block rounded-md px-3 py-2 transition-colors ${
-                    activeSection === "configuration"
-                      ? "bg-muted text-foreground"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                  }`}
-                  prefetch={false}
-                >
-                  Configuration
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div className="space-y-1">
-            <h4 className="text-sm font-medium">Core Concepts</h4>
-            <ul className="space-y-1 text-sm">
-              <li>
-                <Link
-                  href="#"
-                  onClick={() => handleLinkClick("authentication")}
-                  className={`block rounded-md px-3 py-2 transition-colors ${
-                    activeSection === "authentication"
-                      ? "bg-muted text-foreground"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                  }`}
-                  prefetch={false}
-                >
-                  Authentication
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  onClick={() => handleLinkClick("authorization")}
-                  className={`block rounded-md px-3 py-2 transition-colors ${
-                    activeSection === "authorization"
-                      ? "bg-muted text-foreground"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                  }`}
-                  prefetch={false}
-                >
-                  Authorization
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  onClick={() => handleLinkClick("profiles")}
-                  className={`block rounded-md px-3 py-2 transition-colors ${
-                    activeSection === "profiles"
-                      ? "bg-muted text-foreground"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                  }`}
-                  prefetch={false}
-                >
-                  Profiles
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  onClick={() => handleLinkClick("sessions")}
-                  className={`block rounded-md px-3 py-2 transition-colors ${
-                    activeSection === "sessions"
-                      ? "bg-muted text-foreground"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                  }`}
-                  prefetch={false}
-                >
-                  Sessions
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div className="space-y-1">
-            <h4 className="text-sm font-medium">Advanced Topics</h4>
-            <ul className="space-y-1 text-sm">
-              <li>
-                <Link
-                  href="#"
-                  onClick={() => handleLinkClick("integrations")}
-                  className={`block rounded-md px-3 py-2 transition-colors ${
-                    activeSection === "integrations"
-                      ? "bg-muted text-foreground"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                  }`}
-                  prefetch={false}
-                >
-                  Integrations
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  onClick={() => handleLinkClick("customization")}
-                  className={`block rounded-md px-3 py-2 transition-colors ${
-                    activeSection === "customization"
-                      ? "bg-muted text-foreground"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                  }`}
-                  prefetch={false}
-                >
-                  Customization
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  onClick={() => handleLinkClick("security")}
-                  className={`block rounded-md px-3 py-2 transition-colors ${
-                    activeSection === "security"
-                      ? "bg-muted text-foreground"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                  }`}
-                  prefetch={false}
-                >
-                  Security
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  onClick={() => handleLinkClick("troubleshooting")}
-                  className={`block rounded-md px-3 py-2 transition-colors ${
-                    activeSection === "troubleshooting"
-                      ? "bg-muted text-foreground"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                  }`}
-                  prefetch={false}
-                >
-                  Troubleshooting
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </nav>
+      <aside className="sticky top-0 hidden h-screen w-64 shrink-0 bg-background px-6 pt-12 md:block">
+        <nav className="flex flex-col gap-6 pl-6 text-sm font-medium [&>a]:text-muted-foreground hover:[&>a]:text-gray-900">
+          <Link href="/docs/integration">Introduction</Link>
+          <Link href="/docs/integration">Getting Started</Link>
+          <Link href="/docs/integration">Integration</Link>
+          <Link href="/docs/integration">Testing</Link>
+          <Link href="/docs/integration">FAQ&apos;s</Link>
+      </nav>
+
       </aside>
 
       <main className="flex-1 overflow-auto bg-background px-6 py-8 md:px-12 md:py-12">
@@ -408,6 +245,180 @@ function SignInPage() {
           </div>
         </div>
       </main>
+
+      <aside className="sticky top-0 hidden h-screen w-64 shrink-0 bg-background px-6 pt-12 md:block">
+        <nav className="space-y-6">
+          <div className="space-y-1">
+            <h4 className="text-sm font-medium">Getting Started</h4>
+            <ul className="space-y-1 text-sm">
+              <li>
+                <Link
+                  href="#"
+                  onClick={() => handleLinkClick("getting-started")}
+                  className={`block rounded-md px-3 py-2 transition-colors ${
+                    activeSection === "getting-started"
+                      ? "bg-muted text-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
+                  prefetch={false}
+                >
+                  Introduction
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  onClick={() => handleLinkClick("installation")}
+                  className={`block rounded-md px-3 py-2 transition-colors ${
+                    activeSection === "installation"
+                      ? "bg-muted text-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
+                  prefetch={false}
+                >
+                  Installation
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  onClick={() => handleLinkClick("configuration")}
+                  className={`block rounded-md px-3 py-2 transition-colors ${
+                    activeSection === "configuration"
+                      ? "bg-muted text-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
+                  prefetch={false}
+                >
+                  Configuration
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div className="space-y-1">
+            <h4 className="text-sm font-medium">Core Concepts</h4>
+            <ul className="space-y-1 text-sm">
+              <li>
+                <Link
+                  href="#"
+                  onClick={() => handleLinkClick("authentication")}
+                  className={`block rounded-md px-3 py-2 transition-colors ${
+                    activeSection === "authentication"
+                      ? "bg-muted text-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
+                  prefetch={false}
+                >
+                  Authentication
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  onClick={() => handleLinkClick("authorization")}
+                  className={`block rounded-md px-3 py-2 transition-colors ${
+                    activeSection === "authorization"
+                      ? "bg-muted text-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
+                  prefetch={false}
+                >
+                  Authorization
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  onClick={() => handleLinkClick("profiles")}
+                  className={`block rounded-md px-3 py-2 transition-colors ${
+                    activeSection === "profiles"
+                      ? "bg-muted text-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
+                  prefetch={false}
+                >
+                  Profiles
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  onClick={() => handleLinkClick("sessions")}
+                  className={`block rounded-md px-3 py-2 transition-colors ${
+                    activeSection === "sessions"
+                      ? "bg-muted text-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
+                  prefetch={false}
+                >
+                  Sessions
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div className="space-y-1">
+            <h4 className="text-sm font-medium">Advanced Topics</h4>
+            <ul className="space-y-1 text-sm">
+              <li>
+                <Link
+                  href="#"
+                  onClick={() => handleLinkClick("integrations")}
+                  className={`block rounded-md px-3 py-2 transition-colors ${
+                    activeSection === "integrations"
+                      ? "bg-muted text-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
+                  prefetch={false}
+                >
+                  Integrations
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  onClick={() => handleLinkClick("customization")}
+                  className={`block rounded-md px-3 py-2 transition-colors ${
+                    activeSection === "customization"
+                      ? "bg-muted text-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
+                  prefetch={false}
+                >
+                  Customization
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  onClick={() => handleLinkClick("security")}
+                  className={`block rounded-md px-3 py-2 transition-colors ${
+                    activeSection === "security"
+                      ? "bg-muted text-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
+                  prefetch={false}
+                >
+                  Security
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  onClick={() => handleLinkClick("troubleshooting")}
+                  className={`block rounded-md px-3 py-2 transition-colors ${
+                    activeSection === "troubleshooting"
+                      ? "bg-muted text-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
+                  prefetch={false}
+                >
+                  Troubleshooting
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </aside>
 
     </div>
   )
