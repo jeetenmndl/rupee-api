@@ -41,6 +41,7 @@ export default function Docs() {
   return (
     <div className="flex min-h-screen w-full px-8">
 
+      {/* left bar  */}
       <aside className="sticky top-0 hidden h-screen w-64 shrink-0 bg-background px-6 pt-12 md:block">
         <nav className="flex flex-col gap-6 pl-6 text-sm font-medium [&>a]:text-muted-foreground hover:[&>a]:text-gray-900">
           <Link href="/docs/integration">Introduction</Link>
@@ -246,6 +247,7 @@ function SignInPage() {
         </div>
       </main>
 
+      {/* righ bar   */}
       <aside className="sticky top-0 hidden h-screen w-64 shrink-0 bg-background px-6 pt-12 md:block">
         <nav className="space-y-6">
           <div className="space-y-1">
